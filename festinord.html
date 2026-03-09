@@ -987,27 +987,24 @@ function fixHeight() {
 }
 
 function loadListsFromSheet() {
-  const sub  = document.getElementById('submitterSelect');
-  const rec  = document.getElementById('recipientSelect');
-  const team = document.getElementById('teamSelect');
-  sub.innerHTML  = '<option>Loading...</option>';
-  rec.innerHTML  = '<option>Loading...</option>';
-  team.innerHTML = '<option>Loading...</option>';
+  // JSONP approach — bypasses CORS completely
+  window._jsonpCallback = function(result) {
+    delete window._jsonpCallback;
+    const old = document.getElementById('_jsonpScript');
+    if (old) old.remove();
+    onListsLoaded(result);
+  };
 
-  // Use CORS proxy to bypass Apps Script CORS restriction
-  const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(APPS_SCRIPT_URL + '?action=getLists');
-  fetch(proxyUrl)
-    .then(r => r.json())
-    .then(data => {
-      const result = JSON.parse(data.contents);
-      onListsLoaded(result);
-    })
-    .catch(err => {
-      console.warn('Sheet unavailable, using fallback data:', err);
-      PEOPLE = [];
-      TEAMS  = ['Activities','Dance','Institute','Logistics','Marketing','Service'];
-      buildDropdowns();
-    });
+  const script = document.createElement('script');
+  script.id = '_jsonpScript';
+  script.src = APPS_SCRIPT_URL + '?action=getLists&callback=_jsonpCallback';
+  script.onerror = function() {
+    console.warn('Sheet unavailable, using fallback data');
+    PEOPLE = [];
+    TEAMS  = ['Activities','Dance','Institute','Logistics','Marketing','Service'];
+    buildDropdowns();
+  };
+  document.head.appendChild(script);
 }
 
 function onListsLoaded(result) {
