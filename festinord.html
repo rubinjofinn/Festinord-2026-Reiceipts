@@ -944,7 +944,7 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
 // CONFIG — Apps Script backend URL
 // ════════════════════════════════
 // ⚠️ KORVAA TÄMÄ APPS SCRIPT WEB APP URL:LLA
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxrs3HgtIZSG0HBWK1k8I0lgejqHRJekRZBHtE1WRDD2TVjV4ffv95s3-or9hBm-ZaV/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyupbRLGIK-zFqmqN_9SpBko9oy__2nU1pXFyYhviZj9b8HkG8gtTPDI3wp3NJW7B9i_A/exec';
 
 // ════════════════════════════════
 // DATA — loaded from Google Sheet
@@ -987,10 +987,19 @@ function fixHeight() {
 }
 
 function loadListsFromSheet() {
-  // Fetch directly from Apps Script
-  fetch(APPS_SCRIPT_URL + '?action=getLists')
+  const sub  = document.getElementById('submitterSelect');
+  const rec  = document.getElementById('recipientSelect');
+  const team = document.getElementById('teamSelect');
+  sub.innerHTML  = '<option>Loading...</option>';
+  rec.innerHTML  = '<option>Loading...</option>';
+  team.innerHTML = '<option>Loading...</option>';
+
+  // Use CORS proxy to bypass Apps Script CORS restriction
+  const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(APPS_SCRIPT_URL + '?action=getLists');
+  fetch(proxyUrl)
     .then(r => r.json())
-    .then(result => {
+    .then(data => {
+      const result = JSON.parse(data.contents);
       onListsLoaded(result);
     })
     .catch(err => {
@@ -1083,11 +1092,6 @@ function savePersonToList() {
 }
 
 function buildDropdowns() {
-  // Save current values before rebuilding
-  const subVal  = document.getElementById('submitterSelect').value;
-  const recVal  = document.getElementById('recipientSelect').value;
-  const teamVal = document.getElementById('teamSelect').value;
-
   const sub = document.getElementById('submitterSelect');
   sub.innerHTML = '<option value="">— Select name —</option>';
   PEOPLE.forEach(p => { const o = document.createElement('option'); o.value = p.name; o.textContent = p.name; sub.appendChild(o); });
@@ -1099,11 +1103,6 @@ function buildDropdowns() {
   const team = document.getElementById('teamSelect');
   team.innerHTML = '<option value="">— Select team —</option>';
   TEAMS.forEach(t => { const o = document.createElement('option'); o.value = t.toLowerCase(); o.textContent = t; team.appendChild(o); });
-
-  // Restore previously selected values
-  if (subVal)  sub.value  = subVal;
-  if (recVal)  rec.value  = recVal;
-  if (teamVal) team.value = teamVal;
 }
 
 // ════════════════════════════════
