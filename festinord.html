@@ -54,12 +54,12 @@ body {
 ════════════════════════════════ */
 .bottom-nav {
   flex-shrink: 0;
-  background: rgba(15,17,24,0.97);
-  backdrop-filter: blur(16px);
-  border-top: 1px solid var(--glass-border);
+  background: #ffffff;
+  border-top: 2px solid var(--subtle);
   display: flex;
   z-index: 100;
   padding-bottom: env(safe-area-inset-bottom);
+  justify-content: space-around;
 }
 .nav-tab {
   flex: 1;
@@ -1610,17 +1610,12 @@ function renderReceiptCard(r, isApproved) {
   const id = 'rc_' + r.row;
   const receiptLink = r.receipt && r.receipt !== 'Uploading...' && r.receipt !== '' ? r.receipt : null;
 
-  // Extract URL from HYPERLINK formula or use direct URL
-  let imageUrl = null;
-  if (receiptLink) {
-    const match = receiptLink.match(/https:\/\/drive\.google\.com\/[^\s"')]+/);
-    if (match) imageUrl = match[0];
-    else if (receiptLink.startsWith('http')) imageUrl = receiptLink;
-  }
+  // Receipt is a direct URL from RichText
+  const imageUrl = receiptLink && receiptLink.startsWith('http') ? receiptLink : null;
 
   const imageSection = imageUrl
     ? `<div class="rcb-image-wrap">
-        <a href="${imageUrl}" target="_blank">📎 Open receipt image</a>
+        <a href="${imageUrl}" target="_blank" style="color:var(--blue);font-size:15px;padding:20px;display:block;text-align:center;">📎 Open receipt image</a>
        </div>`
     : `<div class="rcb-image-wrap"><span class="img-loading">No image uploaded</span></div>`;
 
@@ -1646,19 +1641,10 @@ function renderReceiptCard(r, isApproved) {
         <div class="rcb-detail"><div class="rcb-detail-label">IBAN</div><div class="rcb-detail-value" style="font-size:12px">${escHtml(r.iban||'—')}</div></div>
         ${r.explanation ? `<div class="rcb-detail" style="grid-column:1/-1"><div class="rcb-detail-label">Explanation</div><div class="rcb-detail-value">${escHtml(r.explanation)}</div></div>` : ''}
       </div>
-      ${!isApproved ? `
-      <div class="rcb-checks">
-        <label class="rcb-check">
-          <input type="checkbox" id="${id}_chkFestinord" ${r.approvedFestinord?'checked':''}>
-          <span class="rcb-check-label">Receipt amount matches declared amount?</span>
-        </label>
-        <label class="rcb-check">
-          <input type="checkbox" id="${id}_chkStake" ${r.approvedStake?'checked':''}>
-          <span class="rcb-check-label">Receipt content is acceptable?</span>
-        </label>
-      </div>
-      <button class="rcb-save-btn" onclick="saveApproval(${r.row}, '${id}')">Save ✓</button>
-      ` : `<div style="text-align:center;padding:8px 0;color:var(--green);font-weight:600;">✓ Both checks passed</div>`}
+      ${!isApproved
+        ? `<button class="rcb-save-btn" onclick="saveApproval(${r.row}, '${id}')">✓ Approve receipt</button>`
+        : `<div style="text-align:center;padding:12px 0;color:var(--green);font-weight:600;font-size:16px;">✓ Approved by Festinord Team</div>`
+      }
     </div>
   </div>`;
 }
