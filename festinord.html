@@ -707,6 +707,40 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
   .kpi-grid { grid-template-columns: 1fr; }
   .donut-wrap { flex-direction: column; }
 }
+
+/* ════════════════════════════════
+   LIGHTBOX
+════════════════════════════════ */
+.lightbox-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.lightbox-overlay.open { display: flex; }
+.lightbox-overlay img {
+  max-width: 100%;
+  max-height: 90vh;
+  border-radius: 10px;
+  box-shadow: 0 8px 60px rgba(0,0,0,0.8);
+  object-fit: contain;
+}
+.lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 36px;
+  color: #fff;
+  cursor: pointer;
+  line-height: 1;
+  background: none;
+  border: none;
+  font-weight: 300;
+}
 </style>
 </head>
 <body>
@@ -1613,9 +1647,17 @@ function renderReceiptCard(r, isApproved) {
   // Receipt is a direct URL from RichText
   const imageUrl = receiptLink && receiptLink.startsWith('http') ? receiptLink : null;
 
-  const imageSection = imageUrl
-    ? `<div class="rcb-image-wrap">
-        <a href="${imageUrl}" target="_blank" style="color:var(--blue);font-size:15px;padding:20px;display:block;text-align:center;">📎 Open receipt image</a>
+  // Convert Drive view URL to direct embed/thumbnail URL
+  let embedUrl = null;
+  if (imageUrl) {
+    const m = imageUrl.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if (m) embedUrl = 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w800';
+  }
+
+  const imageSection = embedUrl
+    ? `<div class="rcb-image-wrap" style="cursor:zoom-in;" onclick="openLightbox('${embedUrl}')">
+        <img src="${embedUrl}" alt="Receipt" style="width:100%;border-radius:8px;display:block;">
+        <div style="text-align:center;font-size:12px;color:var(--muted);padding:6px 0;">🔍 Tap to zoom</div>
        </div>`
     : `<div class="rcb-image-wrap"><span class="img-loading">No image uploaded</span></div>`;
 
@@ -1716,6 +1758,23 @@ function toast(msg, type) {
   clearTimeout(_tt);
   _tt = setTimeout(() => el.classList.remove('show'), 3000);
 }
+
+function openLightbox(url) {
+  document.getElementById('lightboxImg').src = url;
+  document.getElementById('lightboxOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightboxOverlay').classList.remove('open');
+  document.getElementById('lightboxImg').src = '';
+  document.body.style.overflow = '';
+}
 </script>
+
+<!-- Lightbox -->
+<div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">×</button>
+  <img id="lightboxImg" src="" alt="Receipt">
+</div>
 </body>
 </html>
