@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -945,7 +944,7 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
 // CONFIG — Apps Script backend URL
 // ════════════════════════════════
 // ⚠️ KORVAA TÄMÄ APPS SCRIPT WEB APP URL:LLA
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw45Y7FcOJX4dObINVuV3_1BY8c6p1abeeglzuVQYzJT05nTX2_wPCc6Yq9ccA_UcUYRw/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxrs3HgtIZSG0HBWK1k8I0lgejqHRJekRZBHtE1WRDD2TVjV4ffv95s3-or9hBm-ZaV/exec';
 
 // ════════════════════════════════
 // DATA — loaded from Google Sheet
@@ -995,24 +994,18 @@ function loadListsFromSheet() {
   rec.innerHTML  = '<option>Loading...</option>';
   team.innerHTML = '<option>Loading...</option>';
 
-  // JSONP — bypasses CORS restriction with Apps Script
-  const callbackName = 'jsonpCallback_' + Date.now();
-  window[callbackName] = function(result) {
-    delete window[callbackName];
-    document.getElementById('jsonpScript')?.remove();
-    onListsLoaded(result);
-  };
-
-  const script = document.createElement('script');
-  script.id  = 'jsonpScript';
-  script.src = APPS_SCRIPT_URL + '?action=getLists&callback=' + callbackName;
-  script.onerror = function() {
-    console.warn('Sheet unavailable, using fallback data');
-    PEOPLE = [];
-    TEAMS  = ['Activities','Dance','Institute','Logistics','Marketing','Service'];
-    buildDropdowns();
-  };
-  document.head.appendChild(script);
+  // Fetch directly from Apps Script (supports CORS via redirect)
+  fetch(APPS_SCRIPT_URL + '?action=getLists')
+    .then(r => r.json())
+    .then(result => {
+      onListsLoaded(result);
+    })
+    .catch(err => {
+      console.warn('Sheet unavailable, using fallback data:', err);
+      PEOPLE = [];
+      TEAMS  = ['Activities','Dance','Institute','Logistics','Marketing','Service'];
+      buildDropdowns();
+    });
 }
 
 function onListsLoaded(result) {
