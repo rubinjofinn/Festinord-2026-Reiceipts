@@ -741,6 +741,20 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
   border: none;
   font-weight: 300;
 }
+
+/* ════════════════════════════════
+   TOTALS TABLE
+════════════════════════════════ */
+.totals-table { width:100%; border-collapse:collapse; margin-top:8px; }
+.totals-table th { text-align:left; font-size:12px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; padding:8px 12px; border-bottom:2px solid var(--subtle); }
+.totals-table th:last-child, .totals-table td:last-child { text-align:right; }
+.totals-table th:nth-child(2), .totals-table td:nth-child(2) { text-align:center; }
+.totals-table td { padding:12px; font-size:15px; border-bottom:1px solid var(--subtle); color:var(--text); }
+.totals-table tr:last-child td { border-bottom:none; font-weight:700; font-size:16px; background:var(--surface); }
+.totals-table .team-dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:8px; background:var(--gold); }
+.totals-grand { margin-top:16px; background:var(--surface); border-radius:var(--radius-md); padding:16px; display:flex; justify-content:space-between; align-items:center; }
+.totals-grand-label { font-size:14px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; }
+.totals-grand-value { font-size:24px; font-weight:700; color:var(--gold); }
 </style>
 </head>
 <body>
@@ -964,6 +978,9 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
         <button class="review-tab" id="tabApproved" onclick="switchReviewTab('approved')">
           Approved <span class="tab-count" id="countApproved">0</span>
         </button>
+        <button class="review-tab" id="tabTotals" onclick="switchReviewTab('totals')">
+          Totals
+        </button>
       </div>
 
       <!-- Open receipts -->
@@ -974,6 +991,11 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
       <!-- Approved by FN Team receipts -->
       <div id="reviewApproved" style="display:none;">
         <div class="no-data"><div class="no-data-icon">✅</div>No approved receipts yet.</div>
+      </div>
+
+      <!-- Totals -->
+      <div id="reviewTotals" style="display:none;">
+        <div class="no-data"><div class="no-data-icon">📊</div>No data yet.</div>
       </div>
 
     </div><!-- /adminDash -->
@@ -1592,8 +1614,11 @@ function switchReviewTab(tab) {
   currentReviewTab = tab;
   document.getElementById('tabPending').classList.toggle('active', tab === 'pending');
   document.getElementById('tabApproved').classList.toggle('active', tab === 'approved');
+  document.getElementById('tabTotals').classList.toggle('active', tab === 'totals');
   document.getElementById('reviewPending').style.display  = tab === 'pending'  ? 'block' : 'none';
   document.getElementById('reviewApproved').style.display = tab === 'approved' ? 'block' : 'none';
+  document.getElementById('reviewTotals').style.display   = tab === 'totals'   ? 'block' : 'none';
+  if (tab === 'totals') renderTotals();
 }
 
 function renderAdminDash() {
@@ -1768,6 +1793,58 @@ function closeLightbox() {
   document.getElementById('lightboxOverlay').classList.remove('open');
   document.getElementById('lightboxImg').src = '';
   document.body.style.overflow = '';
+}
+
+function renderTotals() {
+  const el = document.getElementById('reviewTotals');
+  const approved = allReceiptsData.filter(r => r.approvedFestinord);
+  if (approved.length === 0) {
+    el.innerHTML = '<div class="no-data"><div class="no-data-icon">📊</div>No approved receipts yet.</div>';
+    return;
+  }
+
+  // Group by team
+  const byTeam = {};
+  approved.forEach(r => {
+    const team = r.team || 'Unknown';
+    if (!byTeam[team]) byTeam[team] = { count: 0, total: 0 };
+    byTeam[team].count++;
+    byTeam[team].total += parseFloat(r.sum) || 0;
+  });
+
+  const teams = Object.keys(byTeam).sort();
+  const grandTotal = teams.reduce((s, t) => s + byTeam[t].total, 0);
+  const grandCount = teams.reduce((s, t) => s + byTeam[t].count, 0);
+
+  const rows = teams.map(t => `
+    <tr>
+      <td><span class="team-dot"></span>${escHtml(t)}</td>
+      <td>${byTeam[t].count}</td>
+      <td>€ ${byTeam[t].total.toFixed(2)}</td>
+    </tr>`).join('');
+
+  el.innerHTML = `
+    <table class="totals-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Receipts</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows}
+        <tr>
+          <td>All categories</td>
+          <td>${grandCount}</td>
+          <td>€ ${grandTotal.toFixed(2)}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="totals-grand">
+      <div class="totals-grand-label">Total reimbursed</div>
+      <div class="totals-grand-value">€ ${grandTotal.toFixed(2)}</div>
+    </div>`;
 }
 </script>
 
