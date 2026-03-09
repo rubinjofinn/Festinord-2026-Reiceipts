@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -987,7 +988,6 @@ function fixHeight() {
 }
 
 function loadListsFromSheet() {
-  // Show loading state on dropdowns
   const sub  = document.getElementById('submitterSelect');
   const rec  = document.getElementById('recipientSelect');
   const team = document.getElementById('teamSelect');
@@ -995,15 +995,24 @@ function loadListsFromSheet() {
   rec.innerHTML  = '<option>Loading...</option>';
   team.innerHTML = '<option>Loading...</option>';
 
-  fetch(APPS_SCRIPT_URL + '?action=getLists')
-    .then(r => r.json())
-    .then(onListsLoaded)
-    .catch(err => {
-      console.warn('Sheet unavailable, using fallback data:', err);
-      PEOPLE = [];
-      TEAMS  = ['Activities','Dance','Institute','Logistics','Marketing','Service'];
-      buildDropdowns();
-    });
+  // JSONP — bypasses CORS restriction with Apps Script
+  const callbackName = 'jsonpCallback_' + Date.now();
+  window[callbackName] = function(result) {
+    delete window[callbackName];
+    document.getElementById('jsonpScript')?.remove();
+    onListsLoaded(result);
+  };
+
+  const script = document.createElement('script');
+  script.id  = 'jsonpScript';
+  script.src = APPS_SCRIPT_URL + '?action=getLists&callback=' + callbackName;
+  script.onerror = function() {
+    console.warn('Sheet unavailable, using fallback data');
+    PEOPLE = [];
+    TEAMS  = ['Activities','Dance','Institute','Logistics','Marketing','Service'];
+    buildDropdowns();
+  };
+  document.head.appendChild(script);
 }
 
 function onListsLoaded(result) {
