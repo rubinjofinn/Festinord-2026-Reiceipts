@@ -944,7 +944,7 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
 // CONFIG — Apps Script backend URL
 // ════════════════════════════════
 // ⚠️ KORVAA TÄMÄ APPS SCRIPT WEB APP URL:LLA
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyXYv14O1sqw5bUPymwGkSpIcUdOBvZA2ELUy_F9tJ04oLk9V9IaWw29nCZp2hVrrDwPw/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwolpoIK4EXBkbeP6YNG6CWsinsxl_k1Jk_vcXugub_2cLF_6C1BwleLnZ8fa5ZrYl6jw/exec';
 
 // ════════════════════════════════
 // DATA — loaded from Google Sheet
@@ -987,19 +987,34 @@ function fixHeight() {
 }
 
 function loadListsFromSheet() {
-  // JSONP approach — bypasses CORS completely
-  window._jsonpCallback = function(result) {
-    delete window._jsonpCallback;
-    const old = document.getElementById('_jsonpScript');
-    if (old) old.remove();
+  // Clean up any previous JSONP script
+  const old = document.getElementById('_jsonpScript');
+  if (old) old.remove();
+
+  // Timeout fallback after 8 seconds
+  const timeout = setTimeout(function() {
+    console.warn('Sheet timeout, using fallback data');
+    delete window._jsonpListsCallback;
+    PEOPLE = [];
+    TEAMS  = ['Activities','Dance','Institute','Logistics','Marketing','Service'];
+    buildDropdowns();
+  }, 8000);
+
+  window._jsonpListsCallback = function(result) {
+    clearTimeout(timeout);
+    delete window._jsonpListsCallback;
+    const s = document.getElementById('_jsonpScript');
+    if (s) s.remove();
     onListsLoaded(result);
   };
 
   const script = document.createElement('script');
   script.id = '_jsonpScript';
-  script.src = APPS_SCRIPT_URL + '?action=getLists&callback=_jsonpCallback';
+  script.src = APPS_SCRIPT_URL + '?action=getLists&callback=_jsonpListsCallback';
   script.onerror = function() {
+    clearTimeout(timeout);
     console.warn('Sheet unavailable, using fallback data');
+    delete window._jsonpListsCallback;
     PEOPLE = [];
     TEAMS  = ['Activities','Dance','Institute','Logistics','Marketing','Service'];
     buildDropdowns();
