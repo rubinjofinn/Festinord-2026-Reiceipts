@@ -987,14 +987,7 @@ function fixHeight() {
 }
 
 function loadListsFromSheet() {
-  const sub  = document.getElementById('submitterSelect');
-  const rec  = document.getElementById('recipientSelect');
-  const team = document.getElementById('teamSelect');
-  sub.innerHTML  = '<option>Loading...</option>';
-  rec.innerHTML  = '<option>Loading...</option>';
-  team.innerHTML = '<option>Loading...</option>';
-
-  // Fetch directly from Apps Script (supports CORS via redirect)
+  // Fetch directly from Apps Script
   fetch(APPS_SCRIPT_URL + '?action=getLists')
     .then(r => r.json())
     .then(result => {
