@@ -1090,6 +1090,11 @@ function savePersonToList() {
 }
 
 function buildDropdowns() {
+  // Save current values before rebuilding
+  const subVal  = document.getElementById('submitterSelect').value;
+  const recVal  = document.getElementById('recipientSelect').value;
+  const teamVal = document.getElementById('teamSelect').value;
+
   const sub = document.getElementById('submitterSelect');
   sub.innerHTML = '<option value="">— Select name —</option>';
   PEOPLE.forEach(p => { const o = document.createElement('option'); o.value = p.name; o.textContent = p.name; sub.appendChild(o); });
@@ -1101,6 +1106,11 @@ function buildDropdowns() {
   const team = document.getElementById('teamSelect');
   team.innerHTML = '<option value="">— Select team —</option>';
   TEAMS.forEach(t => { const o = document.createElement('option'); o.value = t.toLowerCase(); o.textContent = t; team.appendChild(o); });
+
+  // Restore previously selected values
+  if (subVal)  sub.value  = subVal;
+  if (recVal)  rec.value  = recVal;
+  if (teamVal) team.value = teamVal;
 }
 
 // ════════════════════════════════
