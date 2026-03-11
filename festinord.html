@@ -1230,6 +1230,7 @@ function switchPage(page) {
   document.getElementById('tabRefund').classList.toggle('active', page === 'refund');
   document.getElementById('tabAdmin').classList.toggle('active', page === 'admin');
   if (page === 'admin' && adminUnlocked) renderAdminDash();
+  if (page === 'admin' && !adminUnlocked) initGoogleAuth();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
