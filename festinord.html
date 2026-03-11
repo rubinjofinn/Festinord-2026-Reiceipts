@@ -4,6 +4,63 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Festinord</title>
+<script src="https://accounts.google.com/gsi/client" async defer>
+// ════════════════════════════════
+// GOOGLE AUTH
+// ════════════════════════════════
+function initGoogleAuth() {
+  if (typeof google === 'undefined') {
+    setTimeout(initGoogleAuth, 300);
+    return;
+  }
+  google.accounts.id.initialize({
+    client_id: '285847166552-919sgcoa1pdgupukqbd9poeduld3vgql.apps.googleusercontent.com',
+    callback: handleGoogleCredential,
+    auto_select: false
+  });
+  google.accounts.id.renderButton(
+    document.getElementById('googleSignInBtn'),
+    { theme: 'outline', size: 'large', text: 'sign_in_with', shape: 'rectangular' }
+  );
+}
+
+function handleGoogleCredential(response) {
+  // Decode JWT payload
+  const payload = JSON.parse(atob(response.credential.split('.')[1]));
+  const email = payload.email.toLowerCase();
+  const name  = payload.name;
+
+  if (!ALLOWED_EMAILS.map(e => e.toLowerCase()).includes(email)) {
+    document.getElementById('googleAuthError').style.display = 'block';
+    return;
+  }
+
+  // Authorised!
+  adminUnlocked = true;
+  document.getElementById('adminLock').style.display = 'none';
+  document.getElementById('adminDash').classList.add('visible');
+  document.querySelector('#pageAdmin .admin-top h2').textContent = 'Festinord Team';
+  toast('Welcome, ' + name + ' ✓', 'ok');
+  renderAdminDash();
+}
+
+// Init when admin tab is opened
+const _origSwitchPage = switchPage;
+function switchPage(page) {
+  _origSwitchPage(page);
+  if (page === 'admin' && !adminUnlocked) {
+    initGoogleAuth();
+  }
+}
+
+// Also init on load in case admin page is default
+window.addEventListener('load', () => {
+  if (document.getElementById('pageAdmin').classList.contains('active')) {
+    initGoogleAuth();
+  }
+});
+
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -954,12 +1011,11 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
     <div id="adminLock" class="admin-lock">
       <div class="lock-icon">🔒</div>
       <h2>Festinord Team</h2>
-      <p>Enter the access code to view open receipt requests.</p>
-      <div class="pin-row">
-        <input type="password" id="pinInput" maxlength="5" placeholder="• • • • •"
-               oninput="checkPin()" onkeydown="if(event.key==='Enter')checkPin(true)">
-      </div>
-      <button class="btn-primary" onclick="checkPin(true)">Sign in →</button>
+      <p>Sign in with your Google account to access the team area.</p>
+      <div id="googleSignInBtn" style="display:flex;justify-content:center;margin-top:16px;"></div>
+      <p id="googleAuthError" style="color:var(--red);font-size:14px;margin-top:12px;display:none;">
+        Access denied. Your account is not authorised.
+      </p>
     </div>
 
     <!-- Dashboard -->
@@ -1034,6 +1090,12 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
 // CONFIG — Apps Script backend URL
 // ════════════════════════════════
 // ⚠️ KORVAA TÄMÄ APPS SCRIPT WEB APP URL:LLA
+const ALLOWED_EMAILS = [
+  'jarnalaine@gmail.com',
+  'miikolaine@gmail.com',
+  'rupert.laine@gmail.com'
+];
+
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzbn67N6SJQ3HqO6_5LP23EJFkBYoj7E_Krc94C4MiIp52miaCRJO02JW_HaTKrKkNDLQ/exec';
 
 // ════════════════════════════════
