@@ -4,63 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Festinord</title>
-<script src="https://accounts.google.com/gsi/client" async defer>
-// ════════════════════════════════
-// GOOGLE AUTH
-// ════════════════════════════════
-function initGoogleAuth() {
-  if (typeof google === 'undefined') {
-    setTimeout(initGoogleAuth, 300);
-    return;
-  }
-  google.accounts.id.initialize({
-    client_id: '285847166552-919sgcoa1pdgupukqbd9poeduld3vgql.apps.googleusercontent.com',
-    callback: handleGoogleCredential,
-    auto_select: false
-  });
-  google.accounts.id.renderButton(
-    document.getElementById('googleSignInBtn'),
-    { theme: 'outline', size: 'large', text: 'sign_in_with', shape: 'rectangular' }
-  );
-}
-
-function handleGoogleCredential(response) {
-  // Decode JWT payload
-  const payload = JSON.parse(atob(response.credential.split('.')[1]));
-  const email = payload.email.toLowerCase();
-  const name  = payload.name;
-
-  if (!ALLOWED_EMAILS.map(e => e.toLowerCase()).includes(email)) {
-    document.getElementById('googleAuthError').style.display = 'block';
-    return;
-  }
-
-  // Authorised!
-  adminUnlocked = true;
-  document.getElementById('adminLock').style.display = 'none';
-  document.getElementById('adminDash').classList.add('visible');
-  document.querySelector('#pageAdmin .admin-top h2').textContent = 'Festinord Team';
-  toast('Welcome, ' + name + ' ✓', 'ok');
-  renderAdminDash();
-}
-
-// Init when admin tab is opened
-const _origSwitchPage = switchPage;
-function switchPage(page) {
-  _origSwitchPage(page);
-  if (page === 'admin' && !adminUnlocked) {
-    initGoogleAuth();
-  }
-}
-
-// Also init on load in case admin page is default
-window.addEventListener('load', () => {
-  if (document.getElementById('pageAdmin').classList.contains('active')) {
-    initGoogleAuth();
-  }
-});
-
-</script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
