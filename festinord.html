@@ -1853,6 +1853,41 @@ function renderTotals() {
       <div class="totals-grand-value">€ ${grandTotal.toFixed(2)}</div>
     </div>`;
 }
+
+// ════════════════════════════════
+// GOOGLE AUTH
+// ════════════════════════════════
+function initGoogleAuth() {
+  if (typeof google === 'undefined') {
+    setTimeout(initGoogleAuth, 300);
+    return;
+  }
+  google.accounts.id.initialize({
+    client_id: '285847166552-919sgcoa1pdgupukqbd9poeduld3vgql.apps.googleusercontent.com',
+    callback: handleGoogleCredential,
+    auto_select: false
+  });
+  google.accounts.id.renderButton(
+    document.getElementById('googleSignInBtn'),
+    { theme: 'outline', size: 'large', text: 'sign_in_with', shape: 'rectangular' }
+  );
+}
+
+function handleGoogleCredential(response) {
+  const payload = JSON.parse(atob(response.credential.split('.')[1]));
+  const email = payload.email.toLowerCase();
+  const name  = payload.name;
+  if (!ALLOWED_EMAILS.map(e => e.toLowerCase()).includes(email)) {
+    document.getElementById('googleAuthError').style.display = 'block';
+    return;
+  }
+  adminUnlocked = true;
+  document.getElementById('adminLock').style.display = 'none';
+  document.getElementById('adminDash').classList.add('visible');
+  toast('Welcome, ' + name + ' ✓', 'ok');
+  renderAdminDash();
+}
+
 </script>
 
 <!-- Lightbox -->
