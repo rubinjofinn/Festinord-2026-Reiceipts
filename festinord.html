@@ -24,6 +24,7 @@
   --green:        #1a7a4a;
   --green-dim:    rgba(26,122,74,0.1);
   --red:          #c0392b;
+  --red-dim:      rgba(192,57,43,0.1);
   --blue:         #1a56db;
   --blue-dim:     rgba(26,86,219,0.1);
   --radius-lg:    20px;
@@ -31,9 +32,7 @@
   --radius-sm:    10px;
 }
 
-html {
-  height: 100%;
-}
+html { height: 100%; }
 body {
   height: 100%;
   display: flex;
@@ -360,47 +359,13 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
 
 .empty-list { text-align: center; padding: 28px; color: var(--muted); font-size: 14px; border: 1px dashed var(--glass-border); border-radius: var(--radius-md); }
 
-
-
 /* ── SAVE TO LIST ── */
-.save-to-list-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 10px;
-}
-.btn-save-to-list {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  background: var(--gold-dim);
-  border: 1px solid rgba(212,168,67,0.25);
-  border-radius: var(--radius-sm);
-  color: var(--gold);
-  font-family: 'Outfit', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
-}
+.save-to-list-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+.btn-save-to-list { display: flex; align-items: center; gap: 6px; padding: 8px 14px; background: var(--gold-dim); border: 1px solid rgba(212,168,67,0.25); border-radius: var(--radius-sm); color: var(--gold); font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
 .btn-save-to-list:hover { background: rgba(212,168,67,0.22); }
-.saved-badge {
-  display: none;
-  align-items: center;
-  gap: 5px;
-  font-size: 12px;
-  color: var(--green);
-  font-weight: 500;
-}
+.saved-badge { display: none; align-items: center; gap: 5px; font-size: 12px; color: var(--green); font-weight: 500; }
 .saved-badge.visible { display: flex; }
-.save-hint {
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 6px;
-  line-height: 1.5;
-}
+.save-hint { font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
 
 /* ── PROCESSING & LEGAL NOTICES ── */
 .processing-notice {
@@ -411,125 +376,116 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
   margin: 20px 0 0;
   text-align: left;
 }
-.notice-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-.notice-icon {
-  width: 28px; height: 28px;
-  background: rgba(91,156,246,0.15);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px;
-  flex-shrink: 0;
-}
-.notice-title {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  color: var(--blue);
-}
-.notice-body {
-  font-size: 13px;
-  color: var(--text);
-  line-height: 1.65;
-}
-.notice-date {
-  display: inline-block;
-  margin-top: 8px;
-  background: rgba(91,156,246,0.12);
-  border: 1px solid rgba(91,156,246,0.2);
-  border-radius: 6px;
-  padding: 5px 12px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--blue);
-}
-.legal-notice {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  padding: 16px 18px;
-  margin-top: 10px;
-  text-align: left;
-}
-.legal-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-.legal-icon {
-  width: 26px; height: 26px;
-  background: rgba(212,168,67,0.1);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px;
-  flex-shrink: 0;
-}
-.legal-title {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.legal-body {
-  font-size: 11px;
-  color: var(--muted);
-  line-height: 1.7;
-}
+.notice-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.notice-icon { width: 28px; height: 28px; background: rgba(91,156,246,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+.notice-title { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--blue); }
+.notice-body { font-size: 13px; color: var(--text); line-height: 1.65; }
+.notice-date { display: inline-block; margin-top: 8px; background: rgba(91,156,246,0.12); border: 1px solid rgba(91,156,246,0.2); border-radius: 6px; padding: 5px 12px; font-size: 13px; font-weight: 600; color: var(--blue); }
+.legal-notice { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 16px 18px; margin-top: 10px; text-align: left; }
+.legal-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.legal-icon { width: 26px; height: 26px; background: rgba(212,168,67,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+.legal-title { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); }
+.legal-body { font-size: 11px; color: var(--muted); line-height: 1.7; }
 .legal-body strong { color: var(--text); font-weight: 500; }
 
 /* ════════════════════════════════
    ADMIN PAGE
 ════════════════════════════════ */
-.admin-lock {
-  text-align: center;
-  padding: 40px 20px;
-  max-width: 360px;
-  margin: 0 auto;
-}
-.lock-icon {
-  width: 72px; height: 72px;
-  border-radius: 50%;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 20px;
-  font-size: 30px;
-}
+.admin-lock { text-align: center; padding: 40px 20px; max-width: 360px; margin: 0 auto; }
+.lock-icon { width: 72px; height: 72px; border-radius: 50%; background: var(--glass); border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 30px; }
 .admin-lock h2 { font-family: 'Instrument Serif', serif; font-size: 24px; font-weight: 400; margin-bottom: 8px; }
 .admin-lock p { font-size: 14px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
 .pin-row { display: flex; gap: 8px; margin-bottom: 12px; }
-.pin-row input {
-  flex: 1; padding: 14px; text-align: center;
-  letter-spacing: 6px; font-size: 22px; font-weight: 600;
-  background: var(--glass); border: 1.5px solid var(--glass-border);
-  border-radius: var(--radius-md); color: var(--text);
-  font-family: 'Outfit', sans-serif; outline: none;
-  transition: border-color 0.15s;
-}
+.pin-row input { flex: 1; padding: 14px; text-align: center; letter-spacing: 6px; font-size: 22px; font-weight: 600; background: var(--glass); border: 1.5px solid var(--glass-border); border-radius: var(--radius-md); color: var(--text); font-family: 'Outfit', sans-serif; outline: none; transition: border-color 0.15s; }
 .pin-row input:focus { border-color: rgba(212,168,67,0.5); }
 .pin-row input.error { border-color: var(--red); animation: shake 0.4s ease; }
-@keyframes shake {
-  0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)}
-}
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
 
-/* Admin dashboard */
 .admin-dash { display: none; }
 .admin-dash.visible { display: block; }
 
-.admin-top {
-  display: flex; align-items: center;
-  justify-content: space-between; margin-bottom: 20px;
-}
+.admin-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
 .admin-top h2 { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; }
 .btn-logout { padding: 6px 14px; border: 1px solid var(--glass-border); border-radius: 20px; background: transparent; color: var(--muted); font-family: 'Outfit', sans-serif; font-size: 12px; cursor: pointer; transition: all 0.15s; }
 .btn-logout:hover { color: var(--red); border-color: rgba(224,92,92,0.3); }
+
+/* Review tabs */
+.review-tabs { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+.review-tab {
+  flex: 1; min-width: 0; padding: 10px 6px; border: none; border-radius: var(--radius-sm);
+  font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: all 0.2s;
+  background: var(--subtle); color: var(--muted);
+  white-space: nowrap;
+}
+.review-tab.active { background: var(--gold); color: #fff; }
+.review-tab.tab-disapproved.active { background: var(--red); color: #fff; }
+.review-tab .tab-count { display: inline-block; background: rgba(0,0,0,0.15); border-radius: 20px; padding: 1px 7px; font-size: 11px; margin-left: 4px; }
+
+/* Receipt cards */
+.receipt-card { background: var(--surface); border: 1px solid var(--glass-border); border-radius: var(--radius-md); margin-bottom: 14px; overflow: hidden; }
+.receipt-card.disapproved-card { border-color: rgba(192,57,43,0.25); background: rgba(192,57,43,0.03); }
+.receipt-card-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; cursor: pointer; gap: 12px; }
+.receipt-card-header:hover { background: var(--glass); }
+.rch-left { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
+.rch-name { font-size: 16px; font-weight: 600; color: var(--text); }
+.rch-meta { font-size: 13px; color: var(--muted); }
+.rch-amount { font-size: 20px; font-weight: 700; color: var(--gold); white-space: nowrap; }
+.rch-arrow { font-size: 18px; color: var(--muted); transition: transform 0.2s; }
+.rch-arrow.open { transform: rotate(180deg); }
+.receipt-card-body { display: none; padding: 0 16px 16px; }
+.receipt-card-body.open { display: block; }
+.rcb-image-wrap { width: 100%; border-radius: var(--radius-sm); overflow: hidden; background: var(--subtle); margin-bottom: 16px; display: flex; align-items: center; justify-content: center; min-height: 200px; }
+.rcb-image-wrap img { width: 100%; display: block; }
+.rcb-image-wrap .img-loading { color: var(--muted); font-size: 14px; padding: 40px; }
+.rcb-details { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+.rcb-detail { background: var(--glass); border-radius: var(--radius-sm); padding: 10px 12px; }
+.rcb-detail-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+.rcb-detail-value { font-size: 15px; color: var(--text); font-weight: 500; }
+
+/* Action buttons in receipt cards */
+.rcb-action-row { display: flex; flex-direction: column; gap: 8px; }
+.rcb-approve-btn {
+  width: 100%; padding: 13px; border: none; border-radius: var(--radius-sm);
+  background: var(--green); color: #fff; font-size: 16px; font-weight: 600;
+  font-family: 'Outfit', sans-serif; cursor: pointer; transition: opacity 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.rcb-approve-btn:hover { opacity: 0.85; }
+.rcb-approve-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.rcb-disapprove-btn {
+  width: 100%; padding: 13px; border: 1.5px solid rgba(192,57,43,0.4); border-radius: var(--radius-sm);
+  background: var(--red-dim); color: var(--red); font-size: 15px; font-weight: 600;
+  font-family: 'Outfit', sans-serif; cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.rcb-disapprove-btn:hover { background: rgba(192,57,43,0.18); }
+.rcb-disapprove-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Disapproved folder action buttons */
+.rcb-restore-btn {
+  flex: 1; padding: 12px; border: 1.5px solid rgba(26,86,219,0.35); border-radius: var(--radius-sm);
+  background: var(--blue-dim); color: var(--blue); font-size: 14px; font-weight: 600;
+  font-family: 'Outfit', sans-serif; cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.rcb-restore-btn:hover { background: rgba(26,86,219,0.18); }
+.rcb-restore-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.rcb-delete-btn {
+  flex: 1; padding: 12px; border: 1.5px solid rgba(192,57,43,0.4); border-radius: var(--radius-sm);
+  background: var(--red-dim); color: var(--red); font-size: 14px; font-weight: 600;
+  font-family: 'Outfit', sans-serif; cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.rcb-delete-btn:hover { background: rgba(192,57,43,0.22); }
+.rcb-delete-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.rcb-disapproved-actions { display: flex; gap: 8px; }
+
+.approved-badge { display: inline-flex; align-items: center; gap: 4px; background: #1a7a4a22; color: #1a7a4a; border-radius: 20px; padding: 3px 10px; font-size: 12px; font-weight: 600; }
+.disapproved-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(192,57,43,0.12); color: var(--red); border-radius: 20px; padding: 3px 10px; font-size: 12px; font-weight: 600; }
 
 /* KPI cards */
 .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
@@ -540,145 +496,29 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
 .kpi-value.green { color: var(--green); }
 .kpi-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
 
-/* Category bars */
 .section-title { font-family: 'Instrument Serif', serif; font-size: 18px; font-weight: 400; margin-bottom: 14px; }
 
-.cat-row {
-  margin-bottom: 14px;
-}
-.cat-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
-.cat-name { font-size: 14px; font-weight: 500; text-transform: capitalize; }
-.cat-amount { font-family: 'Instrument Serif', serif; font-size: 16px; color: var(--gold); }
-.cat-bar-wrap { height: 6px; background: var(--subtle); border-radius: 3px; overflow: hidden; }
-.cat-bar-fill { height: 100%; border-radius: 3px; transition: width 0.8s cubic-bezier(.4,0,.2,1); }
-.cat-meta { display: flex; justify-content: space-between; margin-top: 4px; }
-.cat-count { font-size: 11px; color: var(--muted); }
-.cat-pct { font-size: 11px; color: var(--muted); }
+/* Totals table */
+.totals-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+.totals-table th { text-align: left; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 12px; border-bottom: 2px solid var(--subtle); }
+.totals-table th:last-child, .totals-table td:last-child { text-align: right; }
+.totals-table th:nth-child(2), .totals-table td:nth-child(2) { text-align: center; }
+.totals-table td { padding: 12px; font-size: 15px; border-bottom: 1px solid var(--subtle); color: var(--text); }
+.totals-table tr:last-child td { border-bottom: none; font-weight: 700; font-size: 16px; background: var(--surface); }
+.totals-table .team-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; background: var(--gold); }
+.totals-grand { margin-top: 16px; background: var(--surface); border-radius: var(--radius-md); padding: 16px; display: flex; justify-content: space-between; align-items: center; }
+.totals-grand-label { font-size: 14px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.totals-grand-value { font-size: 24px; font-weight: 700; color: var(--gold); }
 
-/* Category colors */
-.bar-0 { background: #d4a843; }
-.bar-1 { background: #5b9cf6; }
-.bar-2 { background: #3ecf8e; }
-.bar-3 { background: #e05c5c; }
-.bar-4 { background: #c47aff; }
-.bar-5 { background: #f97316; }
-.bar-6 { background: #ec4899; }
-
-/* Admin review panel */
-.review-tabs { display:flex; gap:8px; margin-bottom:20px; }
-.review-tab {
-  flex:1; padding:10px 0; border:none; border-radius:var(--radius-sm);
-  font-family:'Outfit',sans-serif; font-size:15px; font-weight:500;
-  cursor:pointer; transition:all 0.2s;
-  background:var(--subtle); color:var(--muted);
-}
-.review-tab.active { background:var(--gold); color:#fff; }
-.review-tab .tab-count {
-  display:inline-block; background:rgba(0,0,0,0.15);
-  border-radius:20px; padding:1px 8px; font-size:12px; margin-left:6px;
-}
-.receipt-card {
-  background:var(--surface); border:1px solid var(--glass-border);
-  border-radius:var(--radius-md); margin-bottom:14px; overflow:hidden;
-}
-.receipt-card-header {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:14px 16px; cursor:pointer; gap:12px;
-}
-.receipt-card-header:hover { background:var(--glass); }
-.rch-left { display:flex; flex-direction:column; gap:3px; flex:1; min-width:0; }
-.rch-name { font-size:16px; font-weight:600; color:var(--text); }
-.rch-meta { font-size:13px; color:var(--muted); }
-.rch-amount { font-size:20px; font-weight:700; color:var(--gold); white-space:nowrap; }
-.rch-arrow { font-size:18px; color:var(--muted); transition:transform 0.2s; }
-.rch-arrow.open { transform:rotate(180deg); }
-.receipt-card-body { display:none; padding:0 16px 16px; }
-.receipt-card-body.open { display:block; }
-.rcb-image-wrap {
-  width:100%; border-radius:var(--radius-sm); overflow:hidden;
-  background:var(--subtle); margin-bottom:16px;
-  display:flex; align-items:center; justify-content:center; min-height:200px;
-}
-.rcb-image-wrap img { width:100%; display:block; }
-.rcb-image-wrap .img-loading { color:var(--muted); font-size:14px; padding:40px; }
-.rcb-image-wrap a { color:var(--blue); font-size:14px; padding:40px; display:block; text-align:center; }
-.rcb-details { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:16px; }
-.rcb-detail { background:var(--glass); border-radius:var(--radius-sm); padding:10px 12px; }
-.rcb-detail-label { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:3px; }
-.rcb-detail-value { font-size:15px; color:var(--text); font-weight:500; }
-.rcb-checks { display:flex; flex-direction:column; gap:10px; margin-bottom:16px; }
-.rcb-check {
-  display:flex; align-items:center; gap:12px;
-  background:var(--glass); border-radius:var(--radius-sm); padding:12px 14px;
-  cursor:pointer; transition:background 0.15s;
-}
-.rcb-check:hover { background:var(--subtle); }
-.rcb-check input[type=checkbox] { width:20px; height:20px; cursor:pointer; accent-color:var(--green); flex-shrink:0; }
-.rcb-check-label { font-size:15px; color:var(--text); }
-.rcb-save-btn {
-  width:100%; padding:12px; border:none; border-radius:var(--radius-sm);
-  background:var(--green); color:#fff; font-size:16px; font-weight:600;
-  font-family:'Outfit',sans-serif; cursor:pointer; transition:opacity 0.2s;
-}
-.rcb-save-btn:hover { opacity:0.85; }
-.rcb-save-btn:disabled { opacity:0.4; cursor:not-allowed; }
-.approved-badge {
-  display:inline-flex; align-items:center; gap:4px;
-  background:#1a7a4a22; color:#1a7a4a;
-  border-radius:20px; padding:3px 10px; font-size:12px; font-weight:600;
-}
-
-/* Recent receipts table in admin */
-.receipt-table { width: 100%; border-collapse: collapse; }
-.receipt-table th {
-  text-align: left; font-size: 10px; font-weight: 600;
-  letter-spacing: 0.8px; text-transform: uppercase;
-  color: var(--muted); padding: 8px 12px;
-  border-bottom: 1px solid var(--glass-border);
-}
-.receipt-table td { padding: 10px 12px; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.03); vertical-align: middle; }
-.receipt-table tr:last-child td { border-bottom: none; }
-.receipt-table tr:hover td { background: rgba(255,255,255,0.02); }
-.td-amount { font-family: 'Instrument Serif', serif; font-size: 15px; color: var(--gold); white-space: nowrap; }
-.td-team { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; text-transform: capitalize; }
 .no-data { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 14px; }
 .no-data .no-data-icon { font-size: 36px; margin-bottom: 12px; }
-
-/* Pie donut chart */
-.donut-wrap { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
-.donut-svg { flex-shrink: 0; }
-.donut-legend { flex: 1; }
-.legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; }
-.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-
-/* Overview text block */
-.overview-card {
-  background: linear-gradient(135deg, rgba(212,168,67,0.06) 0%, rgba(212,168,67,0.02) 100%);
-  border: 1px solid rgba(212,168,67,0.15);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  margin-bottom: 20px;
-}
-.overview-card .ov-title { font-size: 11px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
-.overview-card p { font-size: 14px; color: var(--text); line-height: 1.7; }
-.overview-card strong { color: var(--gold); }
 
 /* ════════════════════════════════
    CONFIRM OVERLAY & TOAST
 ════════════════════════════════ */
-.confirm-overlay {
-  position: fixed; inset: 0; background: rgba(13,15,20,0.85);
-  backdrop-filter: blur(6px); z-index: 200;
-  display: flex; align-items: flex-end; justify-content: center;
-  opacity: 0; pointer-events: none; transition: opacity 0.25s;
-}
+.confirm-overlay { position: fixed; inset: 0; background: rgba(13,15,20,0.85); backdrop-filter: blur(6px); z-index: 200; display: flex; align-items: flex-end; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
 .confirm-overlay.show { opacity: 1; pointer-events: auto; }
-.confirm-sheet {
-  background: #1a1d27; border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  padding: 28px 24px 36px; width: 100%; max-width: 560px;
-  transform: translateY(20px); transition: transform 0.3s cubic-bezier(.2,.8,.3,1);
-}
+.confirm-sheet { background: #1a1d27; border: 1px solid var(--glass-border); border-radius: var(--radius-lg) var(--radius-lg) 0 0; padding: 28px 24px 36px; width: 100%; max-width: 560px; transform: translateY(20px); transition: transform 0.3s cubic-bezier(.2,.8,.3,1); }
 .confirm-overlay.show .confirm-sheet { transform: translateY(0); }
 .confirm-sheet h3 { font-family: 'Instrument Serif', serif; font-size: 20px; font-weight: 400; margin-bottom: 8px; }
 .confirm-sheet p { font-size: 14px; color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
@@ -688,16 +528,7 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
 .btn-cancel-delete { padding: 14px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius-md); color: var(--muted); font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.15s; }
 .btn-cancel-delete:hover { color: var(--text); }
 
-.toast {
-  position: fixed; bottom: 88px; left: 50%;
-  transform: translateX(-50%) translateY(20px); opacity: 0;
-  pointer-events: none; background: #1e2130;
-  border: 1px solid var(--glass-border); color: var(--text);
-  padding: 12px 20px; border-radius: 30px; font-size: 13px;
-  font-weight: 500; z-index: 999; transition: all 0.3s cubic-bezier(.2,.8,.3,1);
-  white-space: nowrap; max-width: 90vw; text-align: center;
-  backdrop-filter: blur(12px); box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-}
+.toast { position: fixed; bottom: 88px; left: 50%; transform: translateX(-50%) translateY(20px); opacity: 0; pointer-events: none; background: #1e2130; border: 1px solid var(--glass-border); color: var(--text); padding: 12px 20px; border-radius: 30px; font-size: 13px; font-weight: 500; z-index: 999; transition: all 0.3s cubic-bezier(.2,.8,.3,1); white-space: nowrap; max-width: 90vw; text-align: center; backdrop-filter: blur(12px); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
 .toast.err { border-color: rgba(224,92,92,0.3); background: rgba(224,92,92,0.12); color: #f08080; }
 .toast.ok  { border-color: rgba(62,207,142,0.3); color: var(--green); }
@@ -706,56 +537,16 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
   .step-title { font-size: 24px; }
   .field-row, .edit-row { grid-template-columns: 1fr; }
   .kpi-grid { grid-template-columns: 1fr; }
-  .donut-wrap { flex-direction: column; }
+  .review-tab { font-size: 12px; }
 }
 
 /* ════════════════════════════════
    LIGHTBOX
 ════════════════════════════════ */
-.lightbox-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.92);
-  z-index: 9999;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
+.lightbox-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 9999; align-items: center; justify-content: center; padding: 20px; }
 .lightbox-overlay.open { display: flex; }
-.lightbox-overlay img {
-  max-width: 100%;
-  max-height: 90vh;
-  border-radius: 10px;
-  box-shadow: 0 8px 60px rgba(0,0,0,0.8);
-  object-fit: contain;
-}
-.lightbox-close {
-  position: absolute;
-  top: 16px;
-  right: 20px;
-  font-size: 36px;
-  color: #fff;
-  cursor: pointer;
-  line-height: 1;
-  background: none;
-  border: none;
-  font-weight: 300;
-}
-
-/* ════════════════════════════════
-   TOTALS TABLE
-════════════════════════════════ */
-.totals-table { width:100%; border-collapse:collapse; margin-top:8px; }
-.totals-table th { text-align:left; font-size:12px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; padding:8px 12px; border-bottom:2px solid var(--subtle); }
-.totals-table th:last-child, .totals-table td:last-child { text-align:right; }
-.totals-table th:nth-child(2), .totals-table td:nth-child(2) { text-align:center; }
-.totals-table td { padding:12px; font-size:15px; border-bottom:1px solid var(--subtle); color:var(--text); }
-.totals-table tr:last-child td { border-bottom:none; font-weight:700; font-size:16px; background:var(--surface); }
-.totals-table .team-dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:8px; background:var(--gold); }
-.totals-grand { margin-top:16px; background:var(--surface); border-radius:var(--radius-md); padding:16px; display:flex; justify-content:space-between; align-items:center; }
-.totals-grand-label { font-size:14px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; }
-.totals-grand-value { font-size:24px; font-weight:700; color:var(--gold); }
+.lightbox-overlay img { max-width: 100%; max-height: 90vh; border-radius: 10px; box-shadow: 0 8px 60px rgba(0,0,0,0.8); object-fit: contain; }
+.lightbox-close { position: absolute; top: 16px; right: 20px; font-size: 36px; color: #fff; cursor: pointer; line-height: 1; background: none; border: none; font-weight: 300; }
 </style>
 </head>
 <body>
@@ -795,7 +586,7 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
 
       <div class="preview-card" id="previewCard">
         <div class="preview-img-wrap">
-          <img id="previewImg" src="" alt="Esikatselu">
+          <img id="previewImg" src="" alt="Preview">
           <div class="preview-overlay">
             <span class="preview-filename" id="previewFilename">—</span>
             <span class="preview-size" id="previewSize"></span>
@@ -878,9 +669,7 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
           <div class="field"><label>Recipient name <span class="req">*</span></label><input type="text" id="recipientFree" placeholder="First Last" oninput="onFreeInput()"></div>
           <div class="field"><label>IBAN account number</label><input type="text" id="ibanFree" placeholder="FI00 0000 0000 0000 00" oninput="onFreeInput()"></div>
           <div class="save-to-list-row">
-            <button class="btn-save-to-list" id="btnSaveToList" onclick="savePersonToList()" disabled>
-              ＋ Save to list
-            </button>
+            <button class="btn-save-to-list" id="btnSaveToList" onclick="savePersonToList()" disabled>＋ Save to list</button>
             <div class="saved-badge" id="savedBadge">✓ Saved to list</div>
           </div>
           <div class="save-hint" id="saveHint">Enter a name to save these details for future use.</div>
@@ -970,13 +759,16 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
         <button class="btn-logout" onclick="adminLogout()">Sign out</button>
       </div>
 
-      <!-- Tabs: Open / Approved by FN Team -->
+      <!-- Tabs: Open / Approved / Disapproved / Totals -->
       <div class="review-tabs">
         <button class="review-tab active" id="tabPending" onclick="switchReviewTab('pending')">
           Open <span class="tab-count" id="countPending">0</span>
         </button>
         <button class="review-tab" id="tabApproved" onclick="switchReviewTab('approved')">
           Approved <span class="tab-count" id="countApproved">0</span>
+        </button>
+        <button class="review-tab tab-disapproved" id="tabDisapproved" onclick="switchReviewTab('disapproved')">
+          Rejected <span class="tab-count" id="countDisapproved">0</span>
         </button>
         <button class="review-tab" id="tabTotals" onclick="switchReviewTab('totals')">
           Totals
@@ -988,9 +780,14 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
         <div class="no-data"><div class="no-data-icon">⏳</div>Loading receipts...</div>
       </div>
 
-      <!-- Approved by FN Team receipts -->
+      <!-- Approved receipts -->
       <div id="reviewApproved" style="display:none;">
         <div class="no-data"><div class="no-data-icon">✅</div>No approved receipts yet.</div>
+      </div>
+
+      <!-- Disapproved receipts -->
+      <div id="reviewDisapproved" style="display:none;">
+        <div class="no-data"><div class="no-data-icon">❌</div>No rejected receipts.</div>
       </div>
 
       <!-- Totals -->
@@ -1001,7 +798,6 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
     </div><!-- /adminDash -->
   </div><!-- /wrap -->
 </div><!-- /pageAdmin -->
-
 
 </div><!-- /app-shell -->
 
@@ -1015,13 +811,13 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
   </button>
 </nav>
 
-<!-- Confirm delete -->
+<!-- Confirm delete overlay -->
 <div class="confirm-overlay" id="confirmOverlay">
   <div class="confirm-sheet">
-    <h3>Delete receipt?</h3>
+    <h3 id="confirmTitle">Delete receipt?</h3>
     <p id="confirmMsg">Are you sure you want to delete this receipt?</p>
     <div class="confirm-btns">
-      <button class="btn-confirm-delete" onclick="confirmDelete()">Delete receipt</button>
+      <button class="btn-confirm-delete" id="confirmActionBtn" onclick="confirmAction()">Delete permanently</button>
       <button class="btn-cancel-delete" onclick="closeConfirm()">Cancel</button>
     </div>
   </div>
@@ -1031,9 +827,8 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
 
 <script>
 // ════════════════════════════════
-// CONFIG — Apps Script backend URL
+// CONFIG
 // ════════════════════════════════
-// ⚠️ KORVAA TÄMÄ APPS SCRIPT WEB APP URL:LLA
 const ALLOWED_EMAILS = [
   'jarnalaine@gmail.com',
   'miikolaine@gmail.com',
@@ -1043,14 +838,11 @@ const ALLOWED_EMAILS = [
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzbn67N6SJQ3HqO6_5LP23EJFkBYoj7E_Krc94C4MiIp52miaCRJO02JW_HaTKrKkNDLQ/exec';
 
 // ════════════════════════════════
-// DATA — loaded from Google Sheet
+// DATA
 // ════════════════════════════════
 let PEOPLE = [];
 let TEAMS  = [];
 const ADMIN_CODE = '54321';
-
-// Category colors
-const CAT_COLORS = ['#d4a843','#5b9cf6','#3ecf8e','#e05c5c','#c47aff','#f97316','#ec4899'];
 
 // ════════════════════════════════
 // STATE
@@ -1059,10 +851,15 @@ let currentStep    = 1;
 let selectedFile   = null;
 let selectedFileDataUrl = null;
 let recipientMode  = 'list';
-let sentReceipts   = [];   // Tämän selaimen kuitit — ei jaeta muille
+let sentReceipts   = [];
 let deleteTargetId = null;
 let adminUnlocked  = false;
 let currentPage    = 'refund';
+let allReceiptsData = [];
+let currentReviewTab = 'pending';
+
+// Confirm overlay callback
+let confirmCallback = null;
 
 // ════════════════════════════════
 // INIT
@@ -1090,11 +887,9 @@ function loadListsFromSheet() {
   rec.innerHTML  = '<option>Loading...</option>';
   team.innerHTML = '<option>Loading...</option>';
 
-  // Clean up any previous JSONP script
   const old = document.getElementById('_jsonpScript');
   if (old) old.remove();
 
-  // Timeout fallback after 8 seconds
   const timeout = setTimeout(function() {
     console.warn('Sheet timeout, using fallback data');
     delete window._jsonpListsCallback;
@@ -1127,7 +922,6 @@ function loadListsFromSheet() {
 
 function onListsLoaded(result) {
   if (!result.success) {
-    console.warn('getLists failed:', result.error);
     TEAMS = ['Activities','Dance','Institute','Logistics','Marketing','Service'];
     buildDropdowns();
     return;
@@ -1146,7 +940,6 @@ function onFreeInput() {
   const badge = document.getElementById('savedBadge');
   const hint  = document.getElementById('saveHint');
   btn.disabled = !name;
-  // Reset saved badge when user types again
   badge.classList.remove('visible');
   const already = PEOPLE.find(p => p.name.toLowerCase() === name.toLowerCase());
   if (already) {
@@ -1179,18 +972,15 @@ function savePersonToList() {
     return;
   }
 
-  // Add locally immediately
   PEOPLE.push({ name, iban, team: '' });
   buildDropdowns();
 
-  // Show saved badge
   document.getElementById('savedBadge').classList.add('visible');
   document.getElementById('btnSaveToList').disabled = true;
   document.getElementById('saveHint').textContent = '✓ Saved! You can now select ' + name + ' from the list.';
   document.getElementById('saveHint').style.color = 'var(--green)';
   toast(name + ' added to list ✓', 'ok');
 
-  // Save to Google Sheet in background
   fetch(APPS_SCRIPT_URL, {
     method: 'POST',
     body: JSON.stringify({ action: 'addPerson', name, iban })
@@ -1198,7 +988,6 @@ function savePersonToList() {
     .then(() => console.log('Person saved to Sheet'))
     .catch(err => console.warn('Could not save to Sheet:', err));
 
-  // Auto-switch to list mode
   setTimeout(() => {
     setMode('list');
     document.getElementById('recipientSelect').value = name;
@@ -1237,8 +1026,6 @@ function switchPage(page) {
 // ════════════════════════════════
 // FILE HANDLING
 // ════════════════════════════════
-let selectedFileDataUrlLocal = null;
-
 function handleFile(file) {
   if (!file) return;
   selectedFile = file;
@@ -1396,9 +1183,7 @@ function submitForm() {
   const payload = {
     imageBase64:   selectedFileDataUrl,
     imageName:     selectedFile?.name || 'receipt.jpg',
-    date,
-    sum,
-    team,
+    date, sum, team,
     submitterName:  sub,
     recipientName:  recName,
     recipientIban:  recIban,
@@ -1412,10 +1197,7 @@ function submitForm() {
     .then(r => r.json())
     .then(result => {
       btn.classList.remove('loading-state');
-      if (!result.success) {
-        toast('Error: ' + result.error, 'err');
-        return;
-      }
+      if (!result.success) { toast('Error: ' + result.error, 'err'); return; }
       const receipt = { id: Date.now(), sum, date, team, sub, expl, recName, recIban,
                         imgDataUrl: selectedFileDataUrl, fileName: selectedFile?.name||'',
                         driveUrl: result.driveUrl };
@@ -1433,10 +1215,7 @@ function submitForm() {
             <div class="notice-icon">📅</div>
             <span class="notice-title">Processing schedule</span>
           </div>
-          <div class="notice-body">
-            All receipts are reviewed and processed every <strong>Wednesday</strong>.
-            Your reimbursement will be handled on the next processing date:
-          </div>
+          <div class="notice-body">All receipts are reviewed and processed every <strong>Wednesday</strong>. Your reimbursement will be handled on the next processing date:</div>
           <div class="notice-date">📅 ${nextWed}</div>
         </div>
         <div class="legal-notice">
@@ -1447,12 +1226,9 @@ function submitForm() {
           <div class="legal-body">
             Once approved, reimbursements are transferred to the account number provided.
             <strong>Processing times may vary depending on your bank and account type.</strong>
-            Domestic transfers typically arrive within 1–2 business days; international or
-            cross-border transfers (e.g. SEPA) may take up to 3–5 business days after the
-            Wednesday processing date. Festinord is not responsible for delays caused by
-            individual banking institutions, public holidays, or incorrect account details
-            provided at time of submission. If your reimbursement has not arrived within
-            <strong>7 business days</strong> of the processing date, please contact the organiser.
+            Domestic transfers typically arrive within 1–2 business days; international or cross-border transfers (e.g. SEPA) may take up to 3–5 business days after the Wednesday processing date.
+            Festinord is not responsible for delays caused by individual banking institutions, public holidays, or incorrect account details provided at time of submission.
+            If your reimbursement has not arrived within <strong>7 business days</strong> of the processing date, please contact the organiser.
           </div>
         </div>`;
 
@@ -1537,18 +1313,18 @@ function askDelete(id) {
   const r = sentReceipts.find(x=>x.id===id);
   if (!r) return;
   deleteTargetId = id;
-  document.getElementById('confirmMsg').textContent = `Deleting receipt: ${r.recName}, € ${parseFloat(r.sum).toFixed(2)} (${fmt(r.date)}). This action cannot be undone.`;
-  document.getElementById('confirmOverlay').classList.add('show');
+  openConfirm(
+    'Delete receipt?',
+    `Deleting receipt: ${r.recName}, € ${parseFloat(r.sum).toFixed(2)} (${fmt(r.date)}). This action cannot be undone.`,
+    'Delete receipt',
+    () => {
+      sentReceipts = sentReceipts.filter(x=>x.id!==deleteTargetId);
+      deleteTargetId = null;
+      renderSentList();
+      toast('Receipt deleted','err');
+    }
+  );
 }
-function confirmDelete() {
-  sentReceipts = sentReceipts.filter(x=>x.id!==deleteTargetId);
-  deleteTargetId = null;
-  closeConfirm();
-  renderSentList();
-  toast('Receipt deleted','err');
-}
-function closeConfirm() { document.getElementById('confirmOverlay').classList.remove('show'); }
-document.addEventListener('click', e => { if (e.target.id==='confirmOverlay') closeConfirm(); });
 
 // ════════════════════════════════
 // RESET
@@ -1579,60 +1355,32 @@ function resetAll() {
 // ════════════════════════════════
 // ADMIN AUTH
 // ════════════════════════════════
-function checkPin(submit) {
-  const val = document.getElementById('pinInput').value;
-  if (val.length < 5 && !submit) return;
-  if (val === ADMIN_CODE) {
-    adminUnlocked = true;
-    document.getElementById('adminLock').style.display = 'none';
-    document.getElementById('adminDash').classList.add('visible');
-    renderAdminDash();
-    toast('Welcome, admin ✓','ok');
-  } else if (submit || val.length >= 5) {
-    const inp = document.getElementById('pinInput');
-    inp.classList.add('error');
-    setTimeout(() => { inp.classList.remove('error'); inp.value = ''; }, 600);
-    toast('Incorrect code','err');
-  }
-}
-
 function adminLogout() {
   adminUnlocked = false;
   document.getElementById('adminLock').style.display = 'block';
   document.getElementById('adminDash').classList.remove('visible');
-  document.getElementById('pinInput').value = '';
 }
 
 // ════════════════════════════════
 // ADMIN DASHBOARD
-// Admin näkee KAIKKIEN kuitit —
-// tässä demossa käytetään sentReceipts
-// koska ei ole oikeaa backendiä.
-// Kun backend liitetään, tänne tulee
-// google.script.run.getAllReceipts()
 // ════════════════════════════════
-// ════════════════════════════════
-// ADMIN REVIEW SYSTEM
-// ════════════════════════════════
-let allReceiptsData = [];
-let currentReviewTab = 'pending';
-
 function switchReviewTab(tab) {
   currentReviewTab = tab;
-  document.getElementById('tabPending').classList.toggle('active', tab === 'pending');
-  document.getElementById('tabApproved').classList.toggle('active', tab === 'approved');
-  document.getElementById('tabTotals').classList.toggle('active', tab === 'totals');
-  document.getElementById('reviewPending').style.display  = tab === 'pending'  ? 'block' : 'none';
-  document.getElementById('reviewApproved').style.display = tab === 'approved' ? 'block' : 'none';
-  document.getElementById('reviewTotals').style.display   = tab === 'totals'   ? 'block' : 'none';
+  ['pending','approved','disapproved','totals'].forEach(t => {
+    document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1)).classList.toggle('active', t === tab);
+    const el = document.getElementById('review' + t.charAt(0).toUpperCase() + t.slice(1));
+    if (el) el.style.display = t === tab ? 'block' : 'none';
+  });
   if (tab === 'totals') renderTotals();
 }
 
 function renderAdminDash() {
-  const pendingEl  = document.getElementById('reviewPending');
-  const approvedEl = document.getElementById('reviewApproved');
-  pendingEl.innerHTML  = '<div class="no-data"><div class="no-data-icon">⏳</div>Loading receipts...</div>';
-  approvedEl.innerHTML = '<div class="no-data"><div class="no-data-icon">⏳</div>Loading receipts...</div>';
+  const pendingEl     = document.getElementById('reviewPending');
+  const approvedEl    = document.getElementById('reviewApproved');
+  const disapprovedEl = document.getElementById('reviewDisapproved');
+  pendingEl.innerHTML     = '<div class="no-data"><div class="no-data-icon">⏳</div>Loading receipts...</div>';
+  approvedEl.innerHTML    = '<div class="no-data"><div class="no-data-icon">⏳</div>Loading receipts...</div>';
+  disapprovedEl.innerHTML = '<div class="no-data"><div class="no-data-icon">⏳</div>Loading receipts...</div>';
 
   fetch(APPS_SCRIPT_URL, {
     method: 'POST',
@@ -1650,36 +1398,39 @@ function renderAdminDash() {
 }
 
 function renderReceiptLists() {
-  const pending  = allReceiptsData.filter(r => !r.approvedFestinord);
-  const approved = allReceiptsData.filter(r => r.approvedFestinord);
+  // A receipt is disapproved if disapprovedFestinord === true
+  // A receipt is approved if approvedFestinord === true AND NOT disapproved
+  // Pending: neither approved nor disapproved
+  const disapproved = allReceiptsData.filter(r => r.disapprovedFestinord);
+  const approved    = allReceiptsData.filter(r => r.approvedFestinord && !r.disapprovedFestinord);
+  const pending     = allReceiptsData.filter(r => !r.approvedFestinord && !r.disapprovedFestinord);
 
-  document.getElementById('countPending').textContent  = pending.length;
-  document.getElementById('countApproved').textContent = approved.length;
+  document.getElementById('countPending').textContent     = pending.length;
+  document.getElementById('countApproved').textContent    = approved.length;
+  document.getElementById('countDisapproved').textContent = disapproved.length;
 
-  const pendingEl  = document.getElementById('reviewPending');
-  const approvedEl = document.getElementById('reviewApproved');
+  const pendingEl     = document.getElementById('reviewPending');
+  const approvedEl    = document.getElementById('reviewApproved');
+  const disapprovedEl = document.getElementById('reviewDisapproved');
 
-  if (pending.length === 0) {
-    pendingEl.innerHTML = '<div class="no-data"><div class="no-data-icon">🎉</div>No pending receipts!</div>';
-  } else {
-    pendingEl.innerHTML = pending.map(r => renderReceiptCard(r, false)).join('');
-  }
+  pendingEl.innerHTML = pending.length === 0
+    ? '<div class="no-data"><div class="no-data-icon">🎉</div>No pending receipts!</div>'
+    : pending.map(r => renderReceiptCard(r, 'pending')).join('');
 
-  if (approved.length === 0) {
-    approvedEl.innerHTML = '<div class="no-data"><div class="no-data-icon">📭</div>No approved receipts yet.</div>';
-  } else {
-    approvedEl.innerHTML = approved.map(r => renderReceiptCard(r, true)).join('');
-  }
+  approvedEl.innerHTML = approved.length === 0
+    ? '<div class="no-data"><div class="no-data-icon">📭</div>No approved receipts yet.</div>'
+    : approved.map(r => renderReceiptCard(r, 'approved')).join('');
+
+  disapprovedEl.innerHTML = disapproved.length === 0
+    ? '<div class="no-data"><div class="no-data-icon">✅</div>No rejected receipts.</div>'
+    : disapproved.map(r => renderReceiptCard(r, 'disapproved')).join('');
 }
 
-function renderReceiptCard(r, isApproved) {
+function renderReceiptCard(r, status) {
   const id = 'rc_' + r.row;
   const receiptLink = r.receipt && r.receipt !== 'Uploading...' && r.receipt !== '' ? r.receipt : null;
-
-  // Receipt is a direct URL from RichText
   const imageUrl = receiptLink && receiptLink.startsWith('http') ? receiptLink : null;
 
-  // Convert Drive view URL to direct embed/thumbnail URL
   let embedUrl = null;
   if (imageUrl) {
     const m = imageUrl.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
@@ -1693,14 +1444,50 @@ function renderReceiptCard(r, isApproved) {
        </div>`
     : `<div class="rcb-image-wrap"><span class="img-loading">No image uploaded</span></div>`;
 
-  const approvedBadge = isApproved
-    ? `<span class="approved-badge">✓ Approved</span>`
-    : '';
+  let statusBadge = '';
+  if (status === 'approved')    statusBadge = '<span class="approved-badge">✓ Approved</span>';
+  if (status === 'disapproved') statusBadge = '<span class="disapproved-badge">✗ Rejected</span>';
 
-  return `<div class="receipt-card" id="${id}">
+  // Action section based on status
+  let actionSection = '';
+
+  if (status === 'pending') {
+    actionSection = `
+      <div class="rcb-action-row">
+        <button class="rcb-approve-btn" id="${id}_appBtn" onclick="saveApproval(${r.row}, '${id}')">
+          ✓ Approve receipt
+        </button>
+        <button class="rcb-disapprove-btn" id="${id}_disBtn" onclick="saveDisapproval(${r.row}, '${id}')">
+          ✗ Reject receipt
+        </button>
+      </div>`;
+  } else if (status === 'approved') {
+    actionSection = `
+      <div style="text-align:center;padding:10px 0 4px;color:var(--green);font-weight:600;font-size:15px;">✓ Approved by Festinord Team</div>
+      <div class="rcb-action-row" style="margin-top:10px;">
+        <button class="rcb-disapprove-btn" id="${id}_disBtn" onclick="saveDisapproval(${r.row}, '${id}')">
+          ✗ Reject this receipt
+        </button>
+      </div>`;
+  } else if (status === 'disapproved') {
+    actionSection = `
+      <div style="text-align:center;padding:10px 0 6px;color:var(--red);font-weight:600;font-size:15px;">✗ Rejected</div>
+      <div class="rcb-disapproved-actions">
+        <button class="rcb-restore-btn" id="${id}_restBtn" onclick="restoreReceipt(${r.row}, '${id}')">
+          ↩ Restore to Open
+        </button>
+        <button class="rcb-delete-btn" id="${id}_delBtn" onclick="askPermanentDelete(${r.row}, '${id}')">
+          🗑 Delete permanently
+        </button>
+      </div>`;
+  }
+
+  const cardClass = status === 'disapproved' ? 'receipt-card disapproved-card' : 'receipt-card';
+
+  return `<div class="${cardClass}" id="${id}">
     <div class="receipt-card-header" onclick="toggleCard('${id}')">
       <div class="rch-left">
-        <div class="rch-name">${escHtml(r.recipient)} ${approvedBadge}</div>
+        <div class="rch-name">${escHtml(r.recipient)} ${statusBadge}</div>
         <div class="rch-meta">${escHtml(r.submitter)} · ${escHtml(r.team)} · ${fmt(r.date)}</div>
       </div>
       <div class="rch-amount">€ ${parseFloat(r.sum||0).toFixed(2)}</div>
@@ -1715,10 +1502,7 @@ function renderReceiptCard(r, isApproved) {
         <div class="rcb-detail"><div class="rcb-detail-label">IBAN</div><div class="rcb-detail-value" style="font-size:12px">${escHtml(r.iban||'—')}</div></div>
         ${r.explanation ? `<div class="rcb-detail" style="grid-column:1/-1"><div class="rcb-detail-label">Explanation</div><div class="rcb-detail-value">${escHtml(r.explanation)}</div></div>` : ''}
       </div>
-      ${!isApproved
-        ? `<button class="rcb-save-btn" onclick="saveApproval(${r.row}, '${id}')">✓ Approve receipt</button>`
-        : `<div style="text-align:center;padding:12px 0;color:var(--green);font-weight:600;font-size:16px;">✓ Approved by Festinord Team</div>`
-      }
+      ${actionSection}
     </div>
   </div>`;
 }
@@ -1730,35 +1514,193 @@ function toggleCard(id) {
   arrow.classList.toggle('open', open);
 }
 
+// ════════════════════════════════
+// APPROVE
+// ════════════════════════════════
 function saveApproval(row, id) {
-  const btn = document.querySelector('#' + id + ' .rcb-save-btn');
-  if (!btn) return;
-  btn.disabled = true;
-  btn.textContent = 'Saving...';
+  const btn = document.getElementById(id + '_appBtn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Saving...'; }
 
   fetch(APPS_SCRIPT_URL, {
     method: 'POST',
-    body: JSON.stringify({
-      action: 'updateApproval',
-      row,
-      approvedFestinord: true,
-      approvedStake: false
-    })
+    body: JSON.stringify({ action: 'updateApproval', row, approvedFestinord: true, approvedStake: false })
   })
   .then(r => r.json())
   .then(res => {
     if (res.success) {
       toast('Approved ✓', 'ok');
       const r = allReceiptsData.find(x => x.row === row);
-      if (r) { r.approvedFestinord = true; }
+      if (r) { r.approvedFestinord = true; r.disapprovedFestinord = false; }
       renderReceiptLists();
     } else {
       toast('Error: ' + res.error, 'err');
-      btn.disabled = false;
-      btn.textContent = '✓ Approve receipt';
+      if (btn) { btn.disabled = false; btn.textContent = '✓ Approve receipt'; }
     }
   })
-  .catch(() => { toast('Network error', 'err'); btn.disabled = false; btn.textContent = '✓ Approve receipt'; });
+  .catch(() => {
+    toast('Network error', 'err');
+    if (btn) { btn.disabled = false; btn.textContent = '✓ Approve receipt'; }
+  });
+}
+
+// ════════════════════════════════
+// DISAPPROVE / REJECT
+// ════════════════════════════════
+function saveDisapproval(row, id) {
+  const btn = document.getElementById(id + '_disBtn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Saving...'; }
+
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({ action: 'updateApproval', row, approvedFestinord: false, disapprovedFestinord: true })
+  })
+  .then(r => r.json())
+  .then(res => {
+    if (res.success) {
+      toast('Receipt rejected', 'err');
+      const r = allReceiptsData.find(x => x.row === row);
+      if (r) { r.approvedFestinord = false; r.disapprovedFestinord = true; }
+      renderReceiptLists();
+      // Switch to disapproved tab to show user where it went
+      switchReviewTab('disapproved');
+    } else {
+      toast('Error: ' + res.error, 'err');
+      if (btn) { btn.disabled = false; btn.textContent = '✗ Reject receipt'; }
+    }
+  })
+  .catch(() => {
+    toast('Network error', 'err');
+    if (btn) { btn.disabled = false; btn.textContent = '✗ Reject receipt'; }
+  });
+}
+
+// ════════════════════════════════
+// RESTORE from disapproved → open
+// ════════════════════════════════
+function restoreReceipt(row, id) {
+  const btn = document.getElementById(id + '_restBtn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Restoring...'; }
+
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({ action: 'updateApproval', row, approvedFestinord: false, disapprovedFestinord: false })
+  })
+  .then(r => r.json())
+  .then(res => {
+    if (res.success) {
+      toast('Restored to Open ✓', 'ok');
+      const r = allReceiptsData.find(x => x.row === row);
+      if (r) { r.approvedFestinord = false; r.disapprovedFestinord = false; }
+      renderReceiptLists();
+      switchReviewTab('pending');
+    } else {
+      toast('Error: ' + res.error, 'err');
+      if (btn) { btn.disabled = false; btn.textContent = '↩ Restore to Open'; }
+    }
+  })
+  .catch(() => {
+    toast('Network error', 'err');
+    if (btn) { btn.disabled = false; btn.textContent = '↩ Restore to Open'; }
+  });
+}
+
+// ════════════════════════════════
+// PERMANENT DELETE (disapproved)
+// ════════════════════════════════
+function askPermanentDelete(row, id) {
+  const r = allReceiptsData.find(x => x.row === row);
+  if (!r) return;
+  openConfirm(
+    'Delete permanently?',
+    `This will permanently delete the receipt from ${escHtml(r.recipient)} (€ ${parseFloat(r.sum||0).toFixed(2)}, ${fmt(r.date)}). This cannot be undone.`,
+    '🗑 Delete permanently',
+    () => permanentDeleteReceipt(row)
+  );
+}
+
+function permanentDeleteReceipt(row) {
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({ action: 'deleteReceipt', row })
+  })
+  .then(r => r.json())
+  .then(res => {
+    if (res.success) {
+      toast('Receipt permanently deleted', 'err');
+      allReceiptsData = allReceiptsData.filter(x => x.row !== row);
+      renderReceiptLists();
+    } else {
+      toast('Error: ' + res.error, 'err');
+    }
+  })
+  .catch(() => toast('Network error', 'err'));
+}
+
+// ════════════════════════════════
+// CONFIRM OVERLAY (generic)
+// ════════════════════════════════
+function openConfirm(title, msg, btnLabel, callback) {
+  document.getElementById('confirmTitle').textContent = title;
+  document.getElementById('confirmMsg').textContent   = msg;
+  document.getElementById('confirmActionBtn').textContent = btnLabel;
+  confirmCallback = callback;
+  document.getElementById('confirmOverlay').classList.add('show');
+}
+
+function confirmAction() {
+  closeConfirm();
+  if (typeof confirmCallback === 'function') confirmCallback();
+  confirmCallback = null;
+}
+
+function closeConfirm() {
+  document.getElementById('confirmOverlay').classList.remove('show');
+}
+
+document.addEventListener('click', e => { if (e.target.id==='confirmOverlay') closeConfirm(); });
+
+// ════════════════════════════════
+// TOTALS (approved only)
+// ════════════════════════════════
+function renderTotals() {
+  const el = document.getElementById('reviewTotals');
+  const approved = allReceiptsData.filter(r => r.approvedFestinord && !r.disapprovedFestinord);
+  if (approved.length === 0) {
+    el.innerHTML = '<div class="no-data"><div class="no-data-icon">📊</div>No approved receipts yet.</div>';
+    return;
+  }
+
+  const byTeam = {};
+  approved.forEach(r => {
+    const team = r.team || 'Unknown';
+    if (!byTeam[team]) byTeam[team] = { count: 0, total: 0 };
+    byTeam[team].count++;
+    byTeam[team].total += parseFloat(r.sum) || 0;
+  });
+
+  const teams = Object.keys(byTeam).sort();
+  const grandTotal = teams.reduce((s, t) => s + byTeam[t].total, 0);
+  const grandCount = teams.reduce((s, t) => s + byTeam[t].count, 0);
+
+  const rows = teams.map(t => `
+    <tr>
+      <td><span class="team-dot"></span>${escHtml(t)}</td>
+      <td>${byTeam[t].count}</td>
+      <td>€ ${byTeam[t].total.toFixed(2)}</td>
+    </tr>`).join('');
+
+  el.innerHTML = `
+    <table class="totals-table">
+      <thead><tr><th>Category</th><th>Receipts</th><th>Total</th></tr></thead>
+      <tbody>
+        ${rows}
+        <tr><td>All categories</td><td>${grandCount}</td><td>€ ${grandTotal.toFixed(2)}</td></tr>
+      </tbody>
+    </table>
+    <div class="totals-grand">
+      <div class="totals-grand-label">Total reimbursed</div>
+      <div class="totals-grand-value">€ ${grandTotal.toFixed(2)}</div>
+    </div>`;
 }
 
 // ════════════════════════════════
@@ -1766,9 +1708,9 @@ function saveApproval(row, id) {
 // ════════════════════════════════
 function getNextWednesday() {
   const now = new Date();
-  const day = now.getDay(); // 0=Sun,1=Mon,...,3=Wed
+  const day = now.getDay();
   let daysUntil = (3 - day + 7) % 7;
-  if (daysUntil === 0) daysUntil = 7; // if today is Wed, next Wed
+  if (daysUntil === 0) daysUntil = 7;
   const wed = new Date(now);
   wed.setDate(now.getDate() + daysUntil);
   return wed.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
@@ -1802,66 +1744,11 @@ function closeLightbox() {
   document.body.style.overflow = '';
 }
 
-function renderTotals() {
-  const el = document.getElementById('reviewTotals');
-  const approved = allReceiptsData.filter(r => r.approvedFestinord);
-  if (approved.length === 0) {
-    el.innerHTML = '<div class="no-data"><div class="no-data-icon">📊</div>No approved receipts yet.</div>';
-    return;
-  }
-
-  // Group by team
-  const byTeam = {};
-  approved.forEach(r => {
-    const team = r.team || 'Unknown';
-    if (!byTeam[team]) byTeam[team] = { count: 0, total: 0 };
-    byTeam[team].count++;
-    byTeam[team].total += parseFloat(r.sum) || 0;
-  });
-
-  const teams = Object.keys(byTeam).sort();
-  const grandTotal = teams.reduce((s, t) => s + byTeam[t].total, 0);
-  const grandCount = teams.reduce((s, t) => s + byTeam[t].count, 0);
-
-  const rows = teams.map(t => `
-    <tr>
-      <td><span class="team-dot"></span>${escHtml(t)}</td>
-      <td>${byTeam[t].count}</td>
-      <td>€ ${byTeam[t].total.toFixed(2)}</td>
-    </tr>`).join('');
-
-  el.innerHTML = `
-    <table class="totals-table">
-      <thead>
-        <tr>
-          <th>Category</th>
-          <th>Receipts</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${rows}
-        <tr>
-          <td>All categories</td>
-          <td>${grandCount}</td>
-          <td>€ ${grandTotal.toFixed(2)}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="totals-grand">
-      <div class="totals-grand-label">Total reimbursed</div>
-      <div class="totals-grand-value">€ ${grandTotal.toFixed(2)}</div>
-    </div>`;
-}
-
 // ════════════════════════════════
 // GOOGLE AUTH
 // ════════════════════════════════
 function initGoogleAuth() {
-  if (typeof google === 'undefined') {
-    setTimeout(initGoogleAuth, 300);
-    return;
-  }
+  if (typeof google === 'undefined') { setTimeout(initGoogleAuth, 300); return; }
   google.accounts.id.initialize({
     client_id: '285847166552-919sgcoa1pdgupukqbd9poeduld3vgql.apps.googleusercontent.com',
     callback: handleGoogleCredential,
@@ -1887,7 +1774,6 @@ function handleGoogleCredential(response) {
   toast('Welcome, ' + name + ' ✓', 'ok');
   renderAdminDash();
 }
-
 </script>
 
 <!-- Lightbox -->
