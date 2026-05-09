@@ -31,6 +31,7 @@ html,body{height:100%}body{font-family:Outfit,sans-serif;background:var(--bg);co
 <div class="toast" id="toast"></div><div class="lightbox" id="lightbox" onclick="closeLightbox()"><button onclick="closeLightbox()">×</button><img id="lightboxImg" alt="Receipt"></div>
 <script>
 const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbxZKypJ3uySeTXcg3xEwjYbhZ0zJqN8jFGC2U7ptIBR5LyJ5VvT8ajWe80jt01yceKJsA/exec';
+const APP_VERSION='v2026-05-10-003';
 const ALLOWED_EMAILS=['jarnalaine@gmail.com','miikolaine@gmail.com','rupert.laine@gmail.com'];
 let PEOPLE=[],TEAMS=[],selectedFile=null,selectedFileDataUrl=null,recipientMode='list',allReceipts=[],adminUnlocked=false,currentTab='pending',toastTimer=null;
 function g(id){return document.getElementById(id)}
