@@ -32,7 +32,7 @@ html,body{height:100%}body{font-family:Outfit,sans-serif;background:var(--bg);co
 <div class="toast" id="toast"></div><div class="lightbox" id="lightbox" onclick="closeLightbox()"><button onclick="closeLightbox()">×</button><img id="lightboxImg" alt="Receipt"></div>
 <script>
 const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbxZKypJ3uySeTXcg3xEwjYbhZ0zJqN8jFGC2U7ptIBR5LyJ5VvT8ajWe80jt01yceKJsA/exec';
-const APP_VERSION='v2026-05-10-003';
+const APP_VERSION='v2026-05-10-006';
 const ALLOWED_EMAILS=['jarnalaine@gmail.com','miikolaine@gmail.com','rupert.laine@gmail.com'];
 let PEOPLE=[],TEAMS=[],selectedFile=null,selectedFileDataUrl=null,recipientMode='list',allReceipts=[],adminUnlocked=false,currentTab='pending',toastTimer=null;
 function g(id){return document.getElementById(id)}
@@ -93,7 +93,54 @@ function approveFN(row,btn){setButtonLoading(btn,'Approving...');post({action:'u
 function disapprove(row,btn){setButtonLoading(btn,'Disapproving...');post({action:'disapproveReceipt',row:row},'Moved to disapproved')}
 function restoreReceipt(row,btn){setButtonLoading(btn,'Restoring...');post({action:'restoreReceipt',row:row},'Moved back to open')}
 function deletePermanent(row,btn){if(confirm('Delete permanently?')){setButtonLoading(btn,'Deleting...');post({action:'deleteReceiptPermanently',row:row},'Deleted permanently')}}
-function post(data,msg){postPayload(data,()=>{toast(msg,'ok');setTimeout(()=>loadReceipts(()=>{renderReceiptLists();if(currentTab==='totals')renderTotals()}),900)})}
+function post(data,msg){
+  if(data.action==='updateApproval'&&data.approvedFestinord===true){
+    const r=allReceipts.find(x=>Number(x.row)===Number(data.row));
+    if(r){
+      r.approvedFestinord=true;
+      r.disapprovedFestinord=false;
+      renderReceiptLists();
+      switchReviewTab('approved');
+    }
+  }
+
+  if(data.action==='disapproveReceipt'){
+    const r=allReceipts.find(x=>Number(x.row)===Number(data.row));
+    if(r){
+      r.disapprovedFestinord=true;
+      r.approvedFestinord=false;
+      renderReceiptLists();
+      switchReviewTab('disapproved');
+    }
+  }
+
+  if(data.action==='restoreReceipt'){
+    const r=allReceipts.find(x=>Number(x.row)===Number(data.row));
+    if(r){
+      r.disapprovedFestinord=false;
+      r.approvedFestinord=false;
+      renderReceiptLists();
+      switchReviewTab('pending');
+    }
+  }
+
+  if(data.action==='deleteReceiptPermanently'){
+    allReceipts=allReceipts.filter(x=>Number(x.row)!==Number(data.row));
+    renderReceiptLists();
+    switchReviewTab('disapproved');
+  }
+
+  toast(msg,'ok');
+
+  postPayload(data,()=>{
+    setTimeout(()=>{
+      loadReceipts(()=>{
+        renderReceiptLists();
+        if(currentTab==='totals')renderTotals();
+      });
+    },1200);
+  });
+}
 function loadTreVaarna(){g('treVaarnaList').innerHTML='<div class="no-data"><div class="no-data-icon">⏳</div>Loading receipts...</div>';loadReceipts(()=>{const list=allReceipts.filter(r=>r.approvedFestinord&&!r.disapprovedFestinord);g('treVaarnaList').innerHTML=list.length?list.map(treCard).join(''):'<div class="no-data"><div class="no-data-icon">📭</div>No Festinord approved receipts yet</div>'})}
 function treCard(r){const id='tre_'+r.row,actions=r.approvedTreVaarna?'<div style="text-align:center;color:var(--green);font-weight:800;padding:10px">✓ Final approval completed</div>':'<button class="btn-primary" onclick="approveTre('+r.row+')">✓ Approve as Tre Vaarna</button>';return '<div class="receipt-card"><div class="receipt-head" onclick="toggleBody(\''+id+'\')"><div><div class="receipt-name">'+esc(r.recipient||'—')+(r.approvedTreVaarna?'<span class="badge badge-green">✓ Approved by Tre Vaarna</span>':'<span class="badge badge-blue">⏳ Waiting for Tre Vaarna</span>')+'</div><div class="receipt-meta">'+esc(r.submitter||'—')+' · '+esc(r.team||'—')+' · '+fmt(r.date)+'</div></div><div class="receipt-amount">€ '+Number(r.sum||0).toFixed(2)+'</div></div><div class="receipt-body" id="'+id+'">'+imageBox(r)+details(r)+actions+'</div></div>'}
 function approveTre(row){postPayload({action:'approveTreVaarna',row:row,approvedTreVaarna:true},()=>{toast('Approved by Tre Vaarna ✓','ok');setTimeout(loadTreVaarna,900)})}
