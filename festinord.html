@@ -81,7 +81,44 @@ function fixHeight(){const nav=document.querySelector('.bottom-nav').offsetHeigh
 function bindUpload(){const input=document.getElementById('fileInput');input.addEventListener('change',e=>handleFile(e.target.files[0]));const zone=document.getElementById('uploadZone');zone.addEventListener('dragover',e=>{e.preventDefault();zone.style.borderColor='var(--gold)'});zone.addEventListener('dragleave',()=>zone.style.borderColor='rgba(184,134,11,.3)');zone.addEventListener('drop',e=>{e.preventDefault();zone.style.borderColor='rgba(184,134,11,.3)';if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0])})}
 function handleFile(file){if(!file)return;selectedFile=file;document.getElementById('previewFilename').textContent=file.name;document.getElementById('previewSize').textContent=formatBytes(file.size);document.getElementById('uploadZone').style.display='none';document.getElementById('previewCard').classList.add('visible');document.getElementById('btnNext1').disabled=false;const img=document.getElementById('previewImg'),wrap=document.getElementById('previewWrap');const reader=new FileReader();reader.onload=e=>{selectedFileDataUrl=e.target.result;if(file.type&&file.type.startsWith('image/')){wrap.innerHTML='<img id="previewImg" alt="Preview" src="'+selectedFileDataUrl+'">'}else{wrap.innerHTML='<div class="preview-placeholder">📄</div>';toast('File selected. PDF preview is not shown.','ok')}};reader.onerror=()=>toast('Could not read file','err');reader.readAsDataURL(file)}
 function jsonp(action,callback){const cb='cb_'+action+'_'+Date.now()+'_'+Math.floor(Math.random()*10000);window[cb]=res=>{try{callback(res)}finally{delete window[cb];const s=document.getElementById(cb);if(s)s.remove()}};const sc=document.createElement('script');sc.id=cb;sc.src=APPS_SCRIPT_URL+'?action='+encodeURIComponent(action)+'&callback='+cb+'&v='+Date.now();sc.onerror=()=>{delete window[cb];callback({success:false,error:'JSONP failed'})};document.head.appendChild(sc)}
-function loadLists(){jsonp('getLists',res=>{if(!res.success){fallbackLists();toast('Lists could not be loaded: '+(res.error||''),'err');return}PEOPLE=(res.people||[]).filter(p=>p&&p.name);TEAMS=(res.teams||[]).filter(Boolean);if(!TEAMS.length)TEAMS=['Activities','Dance','Institute','Logistics','Marketing','Service'];buildDropdowns()})}
+function loadLists(){
+  const cb = 'festinordListsCallback_' + Date.now();
+
+  window[cb] = function(res) {
+    delete window[cb];
+
+    const script = document.getElementById(cb);
+    if (script) script.remove();
+
+    if (!res || !res.success) {
+      fallbackLists();
+      toast('Lists could not be loaded: ' + (res && res.error ? res.error : 'Unknown error'), 'err');
+      return;
+    }
+
+    PEOPLE = (res.people || []).filter(p => p && p.name);
+    TEAMS = (res.teams || []).filter(Boolean);
+
+    if (!TEAMS.length) {
+      TEAMS = ['Activities','Dance','Institute','Logistics','Marketing','Service'];
+    }
+
+    buildDropdowns();
+    toast('Lists loaded ✓', 'ok');
+  };
+
+  const script = document.createElement('script');
+  script.id = cb;
+  script.src = APPS_SCRIPT_URL + '?action=getLists&callback=' + cb + '&v=' + Date.now();
+
+  script.onerror = function() {
+    delete window[cb];
+    toast('Lists could not be loaded from the Sheet', 'err');
+    fallbackLists();
+  };
+
+  document.head.appendChild(script);
+}
 function fallbackLists(){PEOPLE=[];TEAMS=['Activities','Dance','Institute','Logistics','Marketing','Service'];buildDropdowns()}
 function buildDropdowns(){const sub=document.getElementById('submitterSelect'),rec=document.getElementById('recipientSelect'),team=document.getElementById('teamSelect');sub.innerHTML='<option value="">— Select name —</option>';rec.innerHTML='<option value="">— Select recipient —</option>';team.innerHTML='<option value="">— Select team —</option>';PEOPLE.forEach(p=>{const name=String(p.name||'').trim();if(!name)return;let o=document.createElement('option');o.value=name;o.textContent=name;sub.appendChild(o);o=document.createElement('option');o.value=name;o.textContent=name;o.dataset.iban=p.iban||'';rec.appendChild(o)});TEAMS.forEach(t=>{const o=document.createElement('option');o.value=String(t).toLowerCase();o.textContent=String(t);team.appendChild(o)})}
 function switchPage(page){['Refund','Admin','TreVaarna'].forEach(p=>document.getElementById('page'+p).classList.remove('active'));['Refund','Admin','TreVaarna'].forEach(p=>{const tab=document.getElementById('tab'+p);if(tab)tab.classList.remove('active')});if(page==='refund'){pageRefund.classList.add('active');tabRefund.classList.add('active')}if(page==='admin'){pageAdmin.classList.add('active');tabAdmin.classList.add('active');adminUnlocked?renderAdminDash():initGoogleAuth()}if(page==='tre'){pageTreVaarna.classList.add('active');tabTreVaarna.classList.add('active');loadTreVaarna()}}
