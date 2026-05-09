@@ -359,7 +359,7 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
       <h1 class="step-title">Upload <em>receipt</em></h1>
       <p class="step-desc">Select an image from your gallery or files.</p>
       <div class="upload-zone" id="uploadZone">
-        <input type="file" id="fileInput" accept="image/*,.pdf">
+        <input type="file" id="fileInput" accept="image/*,.pdf" onchange="handleFile(this.files && this.files[0])">
         <div class="upload-icon-wrap">🧾</div>
         <h3>Select file</h3>
         <p>Click or drag a file here</p>
@@ -377,7 +377,7 @@ textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
           </div>
         </div>
         <div class="preview-actions">
-          <button class="btn-replace"><input type="file" id="fileReplace" accept="image/*,.pdf">↺ Replace image</button>
+          <button class="btn-replace"><input type="file" id="fileReplace" accept="image/*,.pdf" onchange="handleFile(this.files && this.files[0])">↺ Replace image</button>
           <div class="check-badge">✓ Image added</div>
         </div>
       </div>
@@ -706,31 +706,66 @@ function switchPage(page) {
 
 function handleFile(file) {
   if (!file) return;
-  selectedFile = file;
-  document.getElementById('previewFilename').textContent = file.name;
-  document.getElementById('previewSize').textContent = formatBytes(file.size);
 
-  if (file.type.startsWith('image/')) {
+  selectedFile = file;
+  selectedFileDataUrl = null;
+
+  const filenameEl = document.getElementById('previewFilename');
+  const sizeEl = document.getElementById('previewSize');
+  const img = document.getElementById('previewImg');
+  const uploadZone = document.getElementById('uploadZone');
+  const previewCard = document.getElementById('previewCard');
+  const nextBtn = document.getElementById('btnNext1');
+
+  if (filenameEl) filenameEl.textContent = file.name || 'Selected file';
+  if (sizeEl) sizeEl.textContent = formatBytes(file.size || 0);
+
+  uploadZone.style.display = 'none';
+  previewCard.classList.add('visible');
+  nextBtn.disabled = false;
+
+  const isImage = file.type && file.type.startsWith('image/');
+  const isPdf = file.type === 'application/pdf' || String(file.name || '').toLowerCase().endsWith('.pdf');
+
+  if (isImage) {
     const reader = new FileReader();
     reader.onload = e => {
       selectedFileDataUrl = e.target.result;
-      const img = document.getElementById('previewImg');
       img.src = selectedFileDataUrl;
       img.style.display = 'block';
     };
+    reader.onerror = () => {
+      img.style.display = 'none';
+      toast('File selected, but preview could not be shown', 'err');
+    };
     reader.readAsDataURL(file);
-  } else {
+  } else if (isPdf) {
+    img.style.display = 'none';
     selectedFileDataUrl = null;
-    document.getElementById('previewImg').style.display = 'none';
+    toast('PDF selected. Preview is not shown, but you can continue.', 'ok');
+  } else {
+    img.style.display = 'none';
+    selectedFileDataUrl = null;
+    toast('File selected. Preview is not available.', 'ok');
   }
-
-  document.getElementById('uploadZone').style.display = 'none';
-  document.getElementById('previewCard').classList.add('visible');
-  document.getElementById('btnNext1').disabled = false;
 }
 
-document.getElementById('fileInput').addEventListener('change', e => handleFile(e.target.files[0]));
-document.getElementById('fileReplace').addEventListener('change', e => handleFile(e.target.files[0]));
+function bindFileInputs() {
+  const fileInput = document.getElementById('fileInput');
+  const fileReplace = document.getElementById('fileReplace');
+
+  if (fileInput && !fileInput.dataset.bound) {
+    fileInput.dataset.bound = 'true';
+    fileInput.addEventListener('change', e => handleFile(e.target.files && e.target.files[0]));
+  }
+
+  if (fileReplace && !fileReplace.dataset.bound) {
+    fileReplace.dataset.bound = 'true';
+    fileReplace.addEventListener('change', e => handleFile(e.target.files && e.target.files[0]));
+  }
+}
+
+bindFileInputs();
 
 const zone = document.getElementById('uploadZone');
 zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
