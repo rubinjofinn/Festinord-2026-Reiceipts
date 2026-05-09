@@ -128,7 +128,37 @@ function onSubmitterChange(){const name=submitterSelect.value;if(name&&recipient
 function onRecipientChange(){const opt=recipientSelect.options[recipientSelect.selectedIndex];const iban=opt?opt.dataset.iban:'';ibanAuto.textContent=iban?'🏦 '+iban:'';ibanAuto.classList.toggle('visible',!!iban)}
 function validateAndReview(){if(!selectedFile)return toast('Please upload a receipt','err');const sub=submitterSelect.value,date=dateInput.value,sum=sumInput.value,team=teamSelect.value,explanation=explanationInput.value.trim();if(!sub)return toast('Please select who is submitting','err');if(!date)return toast('Please select a date','err');if(!sum||Number(sum)<=0)return toast('Please enter the amount','err');if(!team)return toast('Please select a team','err');let recName='',recIban='';if(recipientMode==='list'){recName=recipientSelect.value;const opt=recipientSelect.options[recipientSelect.selectedIndex];recIban=opt?opt.dataset.iban:'';if(!recName)return toast('Please select a recipient','err')}else{recName=recipientFree.value.trim();recIban=ibanFree.value.trim();if(!recName)return toast('Please enter recipient name','err')}reviewCard.innerHTML='<div class="card-label">📋 Summary</div>'+row('Receipt',selectedFileDataUrl&&selectedFile.type.startsWith('image/')?'<img class="review-img-thumb" src="'+selectedFileDataUrl+'">':esc(selectedFile.name))+row('Date',fmt(date))+row('Amount','€ '+Number(sum).toFixed(2))+row('Team',cap(team))+row('Submitted by',esc(sub))+row('Recipient',esc(recName))+(recIban?row('IBAN',esc(recIban)):'')+(explanation?row('Description',esc(explanation)):'');goStep(3)}
 function row(k,v){return '<div class="review-row"><span class="review-key">'+k+'</span><span class="review-val">'+v+'</span></div>'}
-function submitForm(){btnSubmit.disabled=true;btnSubmit.textContent='Submitting...';const opt=recipientSelect.options[recipientSelect.selectedIndex];const payload={action:'saveReceipt',imageBase64:selectedFileDataUrl,imageName:selectedFile?selectedFile.name:'receipt.jpg',date:dateInput.value,sum:sumInput.value,team:teamSelect.value,submitterName:submitterSelect.value,recipientName:recipientMode==='list'?recipientSelect.value:recipientFree.value.trim(),recipientIban:recipientMode==='list'?(opt?opt.dataset.iban:''):ibanFree.value.trim(),explanation:explanationInput.value.trim()};fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',body:JSON.stringify(payload)}).then(()=>{btnSubmit.disabled=false;btnSubmit.textContent='Submit receipt ✓';successSummary.innerHTML='<div class="summary-chip">💰 <strong>€ '+Number(payload.sum).toFixed(2)+'</strong></div><div class="summary-chip">👤 <strong>'+esc(payload.recipientName)+'</strong></div>';toast('Receipt submitted ✓','ok');goStep('success')}).catch(()=>{btnSubmit.disabled=false;btnSubmit.textContent='Submit receipt ✓';toast('Submission failed','err')})}
+function submitForm(){
+  btnSubmit.disabled = true;
+  btnSubmit.textContent = 'Submitting...';
+
+  const opt = recipientSelect.options[recipientSelect.selectedIndex];
+
+  const payload = {
+    action: 'saveReceipt',
+    imageBase64: selectedFileDataUrl,
+    imageName: selectedFile ? selectedFile.name : 'receipt.jpg',
+    date: dateInput.value,
+    sum: sumInput.value,
+    team: teamSelect.value,
+    submitterName: submitterSelect.value,
+    recipientName: recipientMode === 'list' ? recipientSelect.value : recipientFree.value.trim(),
+    recipientIban: recipientMode === 'list' ? (opt ? opt.dataset.iban : '') : ibanFree.value.trim(),
+    explanation: explanationInput.value.trim()
+  };
+
+  postPayload(payload, function(){
+    btnSubmit.disabled = false;
+    btnSubmit.textContent = 'Submit receipt ✓';
+
+    successSummary.innerHTML =
+      '<div class="summary-chip">💰 <strong>€ ' + Number(payload.sum).toFixed(2) + '</strong></div>' +
+      '<div class="summary-chip">👤 <strong>' + esc(payload.recipientName) + '</strong></div>';
+
+    toast('Receipt submitted ✓', 'ok');
+    goStep('success');
+  });
+}
 function resetAll(){selectedFile=null;selectedFileDataUrl=null;fileInput.value='';previewCard.classList.remove('visible');uploadZone.style.display='block';previewWrap.innerHTML='<img id="previewImg" alt="Preview">';btnNext1.disabled=true;sumInput.value='';explanationInput.value='';submitterSelect.value='';recipientSelect.value='';teamSelect.value='';recipientFree.value='';ibanFree.value='';ibanAuto.classList.remove('visible');dateInput.value=new Date().toISOString().slice(0,10);setMode('list');goStep(1)}
 function initGoogleAuth(){if(typeof google==='undefined')return setTimeout(initGoogleAuth,300);google.accounts.id.initialize({client_id:'285847166552-919sgcoa1pdgupukqbd9poeduld3vgql.apps.googleusercontent.com',callback:handleGoogleCredential,auto_select:false});google.accounts.id.renderButton(googleSignInBtn,{theme:'outline',size:'large',text:'sign_in_with',shape:'rectangular'})}
 function handleGoogleCredential(response){const payload=JSON.parse(atob(response.credential.split('.')[1]));const email=String(payload.email||'').toLowerCase();if(!ALLOWED_EMAILS.map(e=>e.toLowerCase()).includes(email)){googleAuthError.style.display='block';return}adminUnlocked=true;adminLock.style.display='none';adminDash.classList.add('visible');toast('Welcome, '+payload.name+' ✓','ok');renderAdminDash()}
@@ -143,10 +173,63 @@ function badge(r,status){if(status==='disapproved')return '<span class="badge ba
 function imageBox(r){const u=driveThumb(r.receipt);return u?'<div class="img-box" onclick="openLightbox(\''+u+'\')"><img src="'+u+'"><div style="font-size:12px;padding:6px;color:var(--muted)">🔍 Tap to zoom</div></div>':'<div class="img-box">No image uploaded</div>'}
 function details(r){return '<div class="details"><div class="detail"><div class="detail-label">Amount</div><div class="detail-value">€ '+Number(r.sum||0).toFixed(2)+'</div></div><div class="detail"><div class="detail-label">Team</div><div class="detail-value">'+esc(r.team||'—')+'</div></div><div class="detail"><div class="detail-label">Submitted by</div><div class="detail-value">'+esc(r.submitter||'—')+'</div></div><div class="detail"><div class="detail-label">IBAN</div><div class="detail-value" style="font-size:12px">'+esc(r.iban||'—')+'</div></div>'+(r.explanation?'<div class="detail" style="grid-column:1/-1"><div class="detail-label">Explanation</div><div class="detail-value">'+esc(r.explanation)+'</div></div>':'')+'</div>'}
 function toggleBody(id){document.getElementById(id).classList.toggle('open')}function approveFN(row){post({action:'updateApproval',row:row,approvedFestinord:true,approvedStake:false,disapprovedFestinord:false},'Approved ✓')}function disapprove(row){post({action:'disapproveReceipt',row:row},'Moved to disapproved')}function restoreReceipt(row){post({action:'restoreReceipt',row:row},'Moved back to open')}function deletePermanent(row){if(confirm('Delete permanently?'))post({action:'deleteReceiptPermanently',row:row},'Deleted permanently')}
-function post(data,msg){fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',body:JSON.stringify(data)}).then(()=>{toast(msg,'ok');setTimeout(()=>loadReceipts(()=>{renderReceiptLists();if(currentTab==='totals')renderTotals()}),900)}).catch(()=>toast('Network error','err'))}
+function post(data,msg){
+  postPayload(data, function(){
+    toast(msg,'ok');
+    setTimeout(function(){
+      loadReceipts(function(){
+        renderReceiptLists();
+        if(currentTab === 'totals') renderTotals();
+      });
+    },900);
+  });
+}
 function loadTreVaarna(){treVaarnaList.innerHTML='<div class="no-data"><div class="no-data-icon">⏳</div>Loading receipts...</div>';loadReceipts(()=>{const list=allReceipts.filter(r=>r.approvedFestinord&&!r.disapprovedFestinord);treVaarnaList.innerHTML=list.length?list.map(treCard).join(''):'<div class="no-data"><div class="no-data-icon">📭</div>No Festinord approved receipts yet</div>'})}
 function treCard(r){const id='tre_'+r.row,actions=r.approvedTreVaarna?'<div style="text-align:center;color:var(--green);font-weight:800;padding:10px">✓ Final approval completed</div>':'<button class="btn-primary" onclick="approveTre('+r.row+')">✓ Approve as Tre Vaarna</button>';return '<div class="receipt-card"><div class="receipt-head" onclick="toggleBody(\''+id+'\')"><div><div class="receipt-name">'+esc(r.recipient||'—')+(r.approvedTreVaarna?'<span class="badge badge-green">✓ Approved by Tre Vaarna</span>':'<span class="badge badge-blue">⏳ Waiting for Tre Vaarna</span>')+'</div><div class="receipt-meta">'+esc(r.submitter||'—')+' · '+esc(r.team||'—')+' · '+fmt(r.date)+'</div></div><div class="receipt-amount">€ '+Number(r.sum||0).toFixed(2)+'</div></div><div class="receipt-body" id="'+id+'">'+imageBox(r)+details(r)+actions+'</div></div>'}
-function approveTre(row){fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',body:JSON.stringify({action:'approveTreVaarna',row:row,approvedTreVaarna:true})}).then(()=>{toast('Approved by Tre Vaarna ✓','ok');setTimeout(loadTreVaarna,900)}).catch(()=>toast('Network error','err'))}
+function approveTre(row){
+  postPayload({action:'approveTreVaarna',row:row,approvedTreVaarna:true}, function(){
+    toast('Approved by Tre Vaarna ✓','ok');
+    setTimeout(loadTreVaarna,900);
+  });
+}
+
+function postPayload(payload, onDone){
+  const iframeName = 'hiddenPostFrame_' + Date.now();
+  const iframe = document.createElement('iframe');
+  iframe.name = iframeName;
+  iframe.style.display = 'none';
+  document.body.appendChild(iframe);
+
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = APPS_SCRIPT_URL;
+  form.target = iframeName;
+  form.style.display = 'none';
+
+  const input = document.createElement('input');
+  input.type = 'hidden';
+  input.name = 'payload';
+  input.value = JSON.stringify(payload);
+
+  form.appendChild(input);
+  document.body.appendChild(form);
+
+  let done = false;
+  const finish = function(){
+    if(done) return;
+    done = true;
+    try { form.remove(); } catch(e) {}
+    setTimeout(function(){ try { iframe.remove(); } catch(e) {} }, 1000);
+    if(typeof onDone === 'function') onDone();
+  };
+
+  iframe.onload = function(){
+    setTimeout(finish, 500);
+  };
+
+  form.submit();
+  setTimeout(finish, 3500);
+}
 function renderTotals(){const a=allReceipts.filter(r=>r.approvedFestinord),m={};a.forEach(r=>{const t=r.team||'Unknown';m[t]=m[t]||{c:0,s:0};m[t].c++;m[t].s+=Number(r.sum||0)});const keys=Object.keys(m),total=keys.reduce((s,k)=>s+m[k].s,0),count=keys.reduce((s,k)=>s+m[k].c,0);reviewTotals.innerHTML=keys.length?'<table class="totals-table"><thead><tr><th>Category</th><th>Receipts</th><th>Total</th></tr></thead><tbody>'+keys.map(k=>'<tr><td>'+esc(k)+'</td><td>'+m[k].c+'</td><td>€ '+m[k].s.toFixed(2)+'</td></tr>').join('')+'<tr><td><strong>All categories</strong></td><td><strong>'+count+'</strong></td><td><strong>€ '+total.toFixed(2)+'</strong></td></tr></tbody></table><div class="grand"><span>Total reimbursed</span><strong>€ '+total.toFixed(2)+'</strong></div>':'<div class="no-data"><div class="no-data-icon">📊</div>No approved receipts yet</div>'}
 function driveThumb(url){if(!url)return '';const m=String(url).match(/\/file\/d\/([a-zA-Z0-9_-]+)/);return m?'https://drive.google.com/thumbnail?id='+m[1]+'&sz=w1000':String(url)}
 function openLightbox(url){lightboxImg.src=url;lightbox.classList.add('open')}function closeLightbox(){lightbox.classList.remove('open');lightboxImg.src=''}
