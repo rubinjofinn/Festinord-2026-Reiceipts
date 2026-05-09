@@ -30,7 +30,7 @@ html,body{height:100%}body{font-family:Outfit,sans-serif;background:var(--bg);co
 <nav class="bottom-nav"><button class="nav-tab active" id="tabRefund" onclick="switchPage('refund')"><span class="nav-icon">🧾</span>Refund</button><button class="nav-tab" id="tabAdmin" onclick="switchPage('admin')"><span class="nav-icon">✅</span>FN Team</button><button class="nav-tab" id="tabTreVaarna" onclick="switchPage('tre')"><span class="nav-icon">🏛️</span>Tre Vaarna</button></nav>
 <div class="toast" id="toast"></div><div class="lightbox" id="lightbox" onclick="closeLightbox()"><button onclick="closeLightbox()">×</button><img id="lightboxImg" alt="Receipt"></div>
 <script>
-const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbyV6g10HgRGq2BgH1WWebj285ZyJSTcr0KgmvHpyAdwIvSjp2LsWm12nDpsPgNpOvR8Kw/exec';
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbxZKypJ3uySeTXcg3xEwjYbhZ0zJqN8jFGC2U7ptIBR5LyJ5VvT8ajWe80jt01yceKJsA/exec';
 const ALLOWED_EMAILS=['jarnalaine@gmail.com','miikolaine@gmail.com','rupert.laine@gmail.com'];
 let PEOPLE=[],TEAMS=[],selectedFile=null,selectedFileDataUrl=null,recipientMode='list',allReceipts=[],adminUnlocked=false,currentTab='pending',toastTimer=null;
 function g(id){return document.getElementById(id)}
