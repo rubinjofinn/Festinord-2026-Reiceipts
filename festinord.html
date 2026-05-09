@@ -51,7 +51,27 @@ function onRecipientChange(){const sel=g('recipientSelect');const opt=sel.option
 function validateAndReview(){if(!selectedFile)return toast('Please upload a receipt','err');const sub=g('submitterSelect').value,date=g('dateInput').value,sum=g('sumInput').value,team=g('teamSelect').value,explanation=g('explanationInput').value.trim();if(!sub)return toast('Please select who is submitting','err');if(!date)return toast('Please select a date','err');if(!sum||Number(sum)<=0)return toast('Please enter the amount','err');if(!team)return toast('Please select a team','err');let recName='',recIban='';if(recipientMode==='list'){const sel=g('recipientSelect');recName=sel.value;const opt=sel.options[sel.selectedIndex];recIban=opt?opt.dataset.iban:'';if(!recName)return toast('Please select a recipient','err')}else{recName=g('recipientFree').value.trim();recIban=g('ibanFree').value.trim();if(!recName)return toast('Please enter recipient name','err')}g('reviewCard').innerHTML='<div class="card-label">📋 Summary</div>'+row('Receipt',selectedFileDataUrl&&selectedFile.type.startsWith('image/')?'<img class="review-img-thumb" src="'+selectedFileDataUrl+'">':esc(selectedFile.name))+row('Date',fmt(date))+row('Amount','€ '+Number(sum).toFixed(2))+row('Team',cap(team))+row('Submitted by',esc(sub))+row('Recipient',esc(recName))+(recIban?row('IBAN',esc(recIban)):'')+(explanation?row('Description',esc(explanation)):'');goStep(3)}
 function row(k,v){return '<div class="review-row"><span class="review-key">'+k+'</span><span class="review-val">'+v+'</span></div>'}
 function submitForm(){const btn=g('btnSubmit');btn.disabled=true;btn.textContent='Submitting...';const sel=g('recipientSelect');const opt=sel.options[sel.selectedIndex];const payload={action:'saveReceipt',imageBase64:selectedFileDataUrl,imageName:selectedFile?selectedFile.name:'receipt.jpg',date:g('dateInput').value,sum:g('sumInput').value,team:g('teamSelect').value,submitterName:g('submitterSelect').value,recipientName:recipientMode==='list'?g('recipientSelect').value:g('recipientFree').value.trim(),recipientIban:recipientMode==='list'?(opt?opt.dataset.iban:''):g('ibanFree').value.trim(),explanation:g('explanationInput').value.trim()};postPayload(payload,()=>{btn.disabled=false;btn.textContent='Submit receipt ✓';g('successSummary').innerHTML='<div class="summary-chip">💰 <strong>€ '+Number(payload.sum).toFixed(2)+'</strong></div><div class="summary-chip">👤 <strong>'+esc(payload.recipientName)+'</strong></div>';toast('Receipt submitted ✓','ok');goStep('success')})}
-function postPayload(payload,onDone){const frameName='postFrame_'+Date.now();const iframe=document.createElement('iframe');iframe.name=frameName;iframe.style.display='none';document.body.appendChild(iframe);const form=document.createElement('form');form.method='POST';form.action=APPS_SCRIPT_URL;form.target=frameName;form.style.display='none';const input=document.createElement('input');input.type='hidden';input.name='payload';input.value=JSON.stringify(payload);form.appendChild(input);document.body.appendChild(form);let done=false;function finish(){if(done)return;done=true;try{form.remove()}catch(e){}setTimeout(()=>{try{iframe.remove()}catch(e){}},1000);if(typeof onDone==='function')onDone()}iframe.onload=()=>setTimeout(finish,700);form.submit();setTimeout(finish,4000)}
+function postPayload(payload,onDone){
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {
+      'Content-Type': 'text/plain;charset=utf-8'
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(() => {
+    if (typeof onDone === 'function') {
+      setTimeout(() => {
+        onDone();
+      }, 1500);
+    }
+  })
+  .catch((err) => {
+    console.error(err);
+    toast('Submission failed. Backend was not reached.', 'err');
+  });
+}
 function resetAll(){selectedFile=null;selectedFileDataUrl=null;g('fileInput').value='';g('previewCard').classList.remove('visible');g('uploadZone').style.display='block';g('previewWrap').innerHTML='<img alt="Preview">';g('btnNext1').disabled=true;g('sumInput').value='';g('explanationInput').value='';g('submitterSelect').value='';g('recipientSelect').value='';g('teamSelect').value='';g('recipientFree').value='';g('ibanFree').value='';g('ibanAuto').classList.remove('visible');g('dateInput').value=new Date().toISOString().slice(0,10);setMode('list');goStep(1)}
 function initGoogleAuth(){if(typeof google==='undefined')return setTimeout(initGoogleAuth,300);google.accounts.id.initialize({client_id:'285847166552-919sgcoa1pdgupukqbd9poeduld3vgql.apps.googleusercontent.com',callback:handleGoogleCredential,auto_select:false});google.accounts.id.renderButton(g('googleSignInBtn'),{theme:'outline',size:'large',text:'sign_in_with',shape:'rectangular'})}
 function handleGoogleCredential(response){const payload=JSON.parse(atob(response.credential.split('.')[1]));const email=String(payload.email||'').toLowerCase();if(!ALLOWED_EMAILS.map(e=>e.toLowerCase()).includes(email)){g('googleAuthError').style.display='block';return}adminUnlocked=true;g('adminLock').style.display='none';g('adminDash').classList.add('visible');toast('Welcome, '+payload.name+' ✓','ok');renderAdminDash()}
