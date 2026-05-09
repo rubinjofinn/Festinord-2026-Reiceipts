@@ -649,9 +649,6 @@ function buildDropdowns() {
   TEAMS = (TEAMS || []).filter(Boolean);
 
   const sub = document.getElementById('submitterSelect');
-  const rec = document.getElementById('recipientSelect');
-  const team = document.getElementById('teamSelect');
-
   if (sub) {
     sub.innerHTML = '<option value="">— Select name —</option>';
     PEOPLE.forEach(p => {
@@ -662,6 +659,7 @@ function buildDropdowns() {
     });
   }
 
+  const rec = document.getElementById('recipientSelect');
   if (rec) {
     rec.innerHTML = '<option value="">— Select recipient —</option>';
     PEOPLE.forEach(p => {
@@ -673,6 +671,7 @@ function buildDropdowns() {
     });
   }
 
+  const team = document.getElementById('teamSelect');
   if (team) {
     team.innerHTML = '<option value="">— Select team —</option>';
     TEAMS.forEach(t => {
@@ -682,35 +681,6 @@ function buildDropdowns() {
       team.appendChild(o);
     });
   }
-
-  return;
-  const sub = document.getElementById('submitterSelect');
-  sub.innerHTML = '<option value="">— Select name —</option>';
-  PEOPLE.forEach(p => {
-    const o = document.createElement('option');
-    o.value = p.name;
-    o.textContent = p.name;
-    sub.appendChild(o);
-  });
-
-  const rec = document.getElementById('recipientSelect');
-  rec.innerHTML = '<option value="">— Select recipient —</option>';
-  PEOPLE.forEach(p => {
-    const o = document.createElement('option');
-    o.value = p.name;
-    o.dataset.iban = p.iban || '';
-    o.textContent = p.name;
-    rec.appendChild(o);
-  });
-
-  const team = document.getElementById('teamSelect');
-  team.innerHTML = '<option value="">— Select team —</option>';
-  TEAMS.forEach(t => {
-    const o = document.createElement('option');
-    o.value = t.toLowerCase();
-    o.textContent = t;
-    team.appendChild(o);
-  });
 }
 
 // PAGE NAVIGATION
