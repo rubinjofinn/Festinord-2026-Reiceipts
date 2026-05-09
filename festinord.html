@@ -143,7 +143,10 @@ input[type="text"], input[type="number"], input[type="date"], input[type="passwo
 input:focus, select:focus, textarea:focus { border-color: rgba(212,168,67,0.5); background: rgba(212,168,67,0.04); }
 input::placeholder, textarea::placeholder { color: var(--muted); }
 select { cursor: pointer; }
-select option { background: #1a1d27; color: var(--text); }
+select option {
+  background: #ffffff;
+  color: #111111;
+}
 textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
 .sum-wrap { position: relative; }
 .sum-wrap .currency { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 16px; font-weight: 500; pointer-events: none; }
@@ -642,6 +645,45 @@ function onListsLoaded(result) {
 }
 
 function buildDropdowns() {
+  PEOPLE = (PEOPLE || []).filter(p => p && p.name && String(p.name).trim() !== '');
+  TEAMS = (TEAMS || []).filter(Boolean);
+
+  const sub = document.getElementById('submitterSelect');
+  const rec = document.getElementById('recipientSelect');
+  const team = document.getElementById('teamSelect');
+
+  if (sub) {
+    sub.innerHTML = '<option value="">— Select name —</option>';
+    PEOPLE.forEach(p => {
+      const o = document.createElement('option');
+      o.value = String(p.name);
+      o.textContent = String(p.name);
+      sub.appendChild(o);
+    });
+  }
+
+  if (rec) {
+    rec.innerHTML = '<option value="">— Select recipient —</option>';
+    PEOPLE.forEach(p => {
+      const o = document.createElement('option');
+      o.value = String(p.name);
+      o.dataset.iban = p.iban || '';
+      o.textContent = String(p.name);
+      rec.appendChild(o);
+    });
+  }
+
+  if (team) {
+    team.innerHTML = '<option value="">— Select team —</option>';
+    TEAMS.forEach(t => {
+      const o = document.createElement('option');
+      o.value = String(t).toLowerCase();
+      o.textContent = String(t);
+      team.appendChild(o);
+    });
+  }
+
+  return;
   const sub = document.getElementById('submitterSelect');
   sub.innerHTML = '<option value="">— Select name —</option>';
   PEOPLE.forEach(p => {
@@ -1615,3 +1657,4 @@ function closeLightbox() {
 </script>
 </body>
 </html>
+
